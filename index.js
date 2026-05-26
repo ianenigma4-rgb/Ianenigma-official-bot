@@ -12,8 +12,49 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(express.json())
+
+// ── PAIRING ROUTES ───────────────────────────────────────────────────────────
+const { requestPairingCode, getSessionId, sessionExists: checkSession } = require('./lib/pairing-server')
+
+// Serve the pairing web page
+app.get('/pair', (req, res) => {
+  res.sendFile(require('path').join(__dirname, 'assets', 'pair.html'))
+})
+
+// Generate pairing code for a phone number
+app.post('/api/pair', async (req, res) => {
+  const { phone } = req.body || {}
+  if (!phone || !/^\d{7,15}$/.test(phone.replace(/\D/g, ''))) {
+    return res.status(400).json({ error: 'Provide a valid phone number (digits only, with country code).' })
+  }
+  const cleanPhone = phone.replace(/\D/g, '')
+  try {
+    const code = await requestPairingCode(cleanPhone)
+    if (!code) return res.status(500).json({ error: 'No pairing code returned. Check the number and try again.' })
+    const formatted = code.match(/.{1,4}/g)?.join('-') || code
+    res.json({ code: formatted })
+  } catch (err) {
+    console.error('Pairing code error:', err.message)
+    res.status(500).json({ error: err.message || 'Failed to generate pairing code.' })
+  }
+})
+
+// Return the base64 SESSION_ID once pairing is complete
+app.get('/api/session', (req, res) => {
+  const sessionId = getSessionId()
+  if (!sessionId) return res.json({ sessionId: null, message: 'Not paired yet.' })
+  res.json({ sessionId })
+})
+
 app.get('/', (req, res) => {
-  res.send('🦇 IANENIGMA MD BOT v1.0.0 is protecting Gotham!')
+  const paired = checkSession()
+  res.send(
+    '🦇 IANENIGMA MD BOT is protecting Gotham!<br><br>' +
+    (paired
+      ? '✅ Bot is paired and running.'
+      : '📱 <a href="/pair" style="color:#6c63ff">Click here to pair your WhatsApp number</a>')
+  )
 })
 
 app.get('/download', (req, res) => {
