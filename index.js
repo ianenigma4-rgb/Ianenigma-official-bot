@@ -238,18 +238,17 @@ setInterval(() => store.writeToFile(), settings.storeWriteInterval || 10000)
 setInterval(() => {
     if (global.gc) {
         global.gc()
-        console.log('🧹 Garbage collection completed')
     }
-}, 60_000) // every 1 minute
+}, 120_000) // every 2 minutes — less frequent to reduce overhead
 
 // Memory monitoring - Restart if RAM gets too high
 setInterval(() => {
     const used = process.memoryUsage().rss / 1024 / 1024
-    if (used > 400) {
-        console.log('⚠️ RAM too high (>400MB), restarting bot...')
+    if (used > 512) {
+        console.log('⚠️ RAM too high (>512MB), restarting bot...')
         process.exit(1) // Panel will auto-restart
     }
-}, 30_000) // check every 30 seconds
+}, 60_000) // check every 60 seconds
 
 let phoneNumber = process.env.PHONE_NUMBER || "256775063416"
 global.phoneNumber = phoneNumber

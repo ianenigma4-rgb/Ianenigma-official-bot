@@ -28,6 +28,19 @@ setInterval(() => {
 const settings = require('./settings');
 require('./config.js');
 const { isBanned } = require('./lib/isBanned');
+
+// ── PERFORMANCE: in-memory cache for bot mode so we never hit the disk on every message ──
+let _isPublicCache = null;
+function getIsPublic() {
+    if (_isPublicCache !== null) return _isPublicCache;
+    try {
+        const d = JSON.parse(fs.readFileSync('./data/messageCount.json', 'utf8'));
+        _isPublicCache = typeof d.isPublic === 'boolean' ? d.isPublic : true;
+    } catch { _isPublicCache = true; }
+    return _isPublicCache;
+}
+function setIsPublicCache(val) { _isPublicCache = val; }
+// ─────────────────────────────────────────────────────────────────────────────
 const yts = require('yt-search');
 const { fetchBuffer } = require('./lib/myfunc');
 const fetch = require('node-fetch');
@@ -324,15 +337,8 @@ async function handleMessages(sock, messageUpdate, printLog) {
         if (userMessage.startsWith(PREFIX)) {
             console.log(`📝 Command used in ${isGroup ? 'group' : 'private'}: ${userMessage}`);
         }
-        // Read bot mode once; don't early-return so moderation can still run in private mode
-        let isPublic = true;
-        try {
-            const data = JSON.parse(fs.readFileSync('./data/messageCount.json'));
-            if (typeof data.isPublic === 'boolean') isPublic = data.isPublic;
-        } catch (error) {
-            console.error('Error checking access mode:', error);
-            // default isPublic=true on error
-        }
+        // Read bot mode from cache — avoids disk read on every message
+        const isPublic = getIsPublic();
         const isOwnerOrSudoCheck = message.key.fromMe || senderIsOwnerOrSudo;
         // Check if user is banned (skip ban check for unban command)
         if (isBanned(senderId) && !userMessage.startsWith(PREFIX + 'unban')) {
@@ -784,9 +790,10 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 try {
                     // Update access mode
                     data.isPublic = action === 'public';
+                    setIsPublicCache(data.isPublic);
 
-                    // Save updated data
-                    fs.writeFileSync('./data/messageCount.json', JSON.stringify(data, null, 2));
+                    // Save updated data async
+                    fs.promises.writeFile('./data/messageCount.json', JSON.stringify(data, null, 2)).catch(console.error);
 
                     await sock.sendMessage(chatId, { text: `Bot is now in *${action}* mode`, ...channelInfo });
                 } catch (error) {
@@ -1674,13 +1681,7 @@ async function handleGroupParticipantUpdate(sock, update) {
         if (!id.endsWith('@g.us')) return;
 
         // Respect bot mode: only announce promote/demote in public mode
-        let isPublic = true;
-        try {
-            const modeData = JSON.parse(fs.readFileSync('./data/messageCount.json'));
-            if (typeof modeData.isPublic === 'boolean') isPublic = modeData.isPublic;
-        } catch (e) {
-            // If reading fails, default to public behavior
-        }
+        const isPublic = getIsPublic();
 
         // Handle promotion events
         if (action === 'promote') {
