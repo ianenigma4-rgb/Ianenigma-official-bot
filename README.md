@@ -244,25 +244,34 @@ Each theme has its own: **banner • border style • bullet points • quote �
 
 ## 🔑 Session ID Generator
 
-Before deploying, generate your **Session ID** so the bot can reconnect without re-pairing every restart.
+The bot has a **built-in pairing page** — no third-party site needed. It's hosted directly on your deployment.
 
 <div align="center">
 
-[![Get Session ID](https://img.shields.io/badge/Generate-Session_ID-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://adevos-x-pair.onrender.com)
+[![Pair Your Number](https://img.shields.io/badge/Open-Pairing_Page-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://YOUR-APP-URL/pair)
 
-**🔗 https://adevos-x-pair.onrender.com**
+**🔗 [https://YOUR-APP-URL/pair](https://YOUR-APP-URL/pair)**
 
 </div>
 
+### Built-in web endpoints
+
+| Endpoint | Method | Description |
+|---|---|---|
+| [`/pair`](https://YOUR-APP-URL/pair) | `GET` | Pairing web page — enter your number, get a code |
+| [`/api/pair`](https://YOUR-APP-URL/api/pair) | `POST` | API: generate a pairing code (`{"phone":"256700123456"}`) |
+| [`/api/session`](https://YOUR-APP-URL/api/session) | `GET` | API: returns your `SESSION_ID` once pairing is complete |
+
 ### How to get your Session ID:
 
-1. Go to **[https://adevos-x-pair.onrender.com](https://adevos-x-pair.onrender.com)**
-2. Enter your WhatsApp number with country code (e.g. `256746724547`)
-3. Click **Generate Pairing Code**
-4. Open WhatsApp on your phone → **Settings → Linked Devices → Link with phone number**
-5. Enter the pairing code shown on the site
-6. Your **Session ID** string will be displayed — copy it
-7. Paste it as the `SESSION_ID` environment variable when deploying
+1. Deploy the bot **without** setting `SESSION_ID` first
+2. Open **`https://YOUR-APP-URL/pair`** in your browser
+3. Enter your WhatsApp number with country code (e.g. `256746724547`)
+4. Click **Generate Pairing Code**
+5. Open WhatsApp on your phone → **Settings → Linked Devices → Link a Device → Link with phone number instead**
+6. Enter the 8-digit code shown on the page
+7. Your **SESSION_ID** string appears automatically — copy it
+8. Set it as the `SESSION_ID` environment variable in your hosting panel and restart the bot
 
 > ⚠️ **Keep your Session ID private.** It gives full access to your WhatsApp account.
 
@@ -278,14 +287,13 @@ Before deploying, generate your **Session ID** so the bot can reconnect without 
 
 ### Deploy on Katabump (Recommended)
 
-1. **Get your Session ID** first → [https://adevos-x-pair.onrender.com](https://adevos-x-pair.onrender.com)
-2. **Import** this repository into your Katabump panel
-3. **Set environment variables:**
+1. **Import** this repository into your Katabump panel
+2. **Set environment variables:**
    - `PHONE_NUMBER` = your WhatsApp number (e.g. `256746724547`)
-   - `SESSION_ID` = the session string from step 1
-4. **Build Command:** `npm install --legacy-peer-deps`
-5. **Start Command:** `node index.js`
-6. Bot connects automatically using your session ✅
+3. **Build Command:** `npm install --legacy-peer-deps`
+4. **Start Command:** `node index.js`
+5. Once running, open **`https://YOUR-APP-URL/pair`** → enter your number → copy the `SESSION_ID`
+6. Add `SESSION_ID` to your environment variables and restart — bot connects automatically ✅
 
 <div align="center">
 <a href="https://dashboard.katabump.com" target="_blank">
@@ -314,7 +322,7 @@ Before deploying, generate your **Session ID** so the bot can reconnect without 
    |-----|-------|----------|
    | `PHONE_NUMBER` | Your WhatsApp number without + (e.g. `256746724547`) | ✅ Yes |
    | `OWNER_NUMBER` | Same as PHONE_NUMBER or different | No |
-   | `SESSION_ID` | Your session string from [adevos-x-pair.onrender.com](https://adevos-x-pair.onrender.com) | No |
+   | `SESSION_ID` | Get from **`YOUR-APP-URL/pair`** after first deploy | No |
    | `BOT_MODE` | `public` or `private` | No |
 
 3. **Add Buildpacks** (Settings → Buildpacks — ADD IN THIS ORDER):
@@ -331,10 +339,10 @@ Before deploying, generate your **Session ID** so the bot can reconnect without 
    - ⚠️ Heroku free tier is gone — use **Eco dynos** ($5/month)
 
 6. **Connect WhatsApp** — two options:
-   - **Option A (Recommended):** Generate Session ID first at [adevos-x-pair.onrender.com](https://adevos-x-pair.onrender.com) and set as `SESSION_ID` config var before deploying
+   - **Option A (Recommended):** After deploying, open **`https://YOUR-APP-URL/pair`**, enter your number, enter the pairing code in WhatsApp, then copy the `SESSION_ID` shown and set it as a Config Var — restart once
    - **Option B:** Check logs (More → View Logs) for the pairing code, then go WhatsApp → Settings → Linked Devices → Link with phone number
 
-> 💡 **Tip:** Generate your Session ID at **[https://adevos-x-pair.onrender.com](https://adevos-x-pair.onrender.com)** before deploying. Paste it as `SESSION_ID` in Config Vars to avoid re-pairing every dyno restart.
+> 💡 **Tip:** The pairing page is built into the bot at **`/pair`**. No external site needed — open it right after your first deploy to get your `SESSION_ID`.
 
 ### Local / VPS Setup
 
@@ -377,7 +385,11 @@ IANENIGMA-MD-BOT/
 │   └── ...
 ├── 📂 lib/              — Utility libraries
 │   ├── antiban.js       — Anti-ban utilities (Uganda time, typing sim)
+│   ├── pairing-server.js — Self-hosted pairing socket & session API
 │   ├── converter.js     — Media conversion
+│   └── ...
+├── 📂 assets/           — Bot images, media, and web pages
+│   ├── pair.html        — Built-in WhatsApp pairing web page (/pair)
 │   └── ...
 ├── 📂 data/             — Runtime data (auto-created)
 │   ├── prefix.json      — Current command prefix
