@@ -51,15 +51,26 @@ Built from the ground up for performance, personality, and protection.
 
 ---
 
-## 🎨 DC Universe Themes
+## 🎨 Themes — DC Universe & Marvel
 
-Switch the bot's entire personality with one command:
+Switch the bot's entire personality with one command. **24 themes** across two universes:
+
+### 🦇 DC Universe (12 themes)
 
 ```
 .theme batman        .theme superman      .theme joker
 .theme wonderwoman   .theme flash         .theme greenlantern
 .theme aquaman       .theme harleyquinn   .theme arrow
 .theme shazam        .theme peacemaker    .theme vigilante
+```
+
+### 🕷️ Marvel Universe (12 themes)
+
+```
+.theme ironman       .theme spiderman     .theme blackpanther
+.theme thor          .theme captainamerica .theme blackwidow
+.theme hulk          .theme doctorstrange .theme antman
+.theme scarletwitch  .theme wolverine     .theme deadpool
 ```
 
 Each theme has its own: **banner • border style • bullet points • quote • greeting personality • error/success messages**
