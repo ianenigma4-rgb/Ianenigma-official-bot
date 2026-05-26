@@ -1,0 +1,22 @@
+{
+  "users": [],
+  "groups": [],
+  "antilink": {
+    "120363344842920552@g.us": {
+      "enabled": true,
+      "action": "delete"
+    }
+  },
+  "antibadword": {
+    "120363344842920552@g.us": {
+      "enabled": true,
+      "action": "delete"
+    }
+  },
+  "warnings": {},
+  "sudo": [],
+  "welcome": {},
+  "goodbye": {},
+  "chatbot": {},
+  "autoReaction": false
+}
