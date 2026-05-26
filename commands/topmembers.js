@@ -31,9 +31,9 @@ function incrementMessageCount(groupId, userId) {
     saveMessageCounts(messageCounts);
 }
 
-function topMembers(sock, chatId, isGroup) {
+async function topMembers(sock, chatId, isGroup) {
     if (!isGroup) {
-        sock.sendMessage(chatId, { text: 'This command is only available in group chats.' });
+        await sock.sendMessage(chatId, { text: 'This command is only available in group chats.' });
         return;
     }
 
@@ -45,7 +45,7 @@ function topMembers(sock, chatId, isGroup) {
         .slice(0, 5); // Get top 5 members
 
     if (sortedMembers.length === 0) {
-        sock.sendMessage(chatId, { text: 'No message activity recorded yet.' });
+        await sock.sendMessage(chatId, { text: 'No message activity recorded yet.' });
         return;
     }
 
@@ -54,7 +54,7 @@ function topMembers(sock, chatId, isGroup) {
         message += `${index + 1}. @${userId.split('@')[0]} - ${count} messages\n`;
     });
 
-    sock.sendMessage(chatId, { text: message, mentions: sortedMembers.map(([userId]) => userId) });
+    await sock.sendMessage(chatId, { text: message, mentions: sortedMembers.map(([userId]) => userId) });
 }
 
 module.exports = { incrementMessageCount, topMembers };

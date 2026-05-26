@@ -11,7 +11,7 @@ const settings = {
   description: "This is a bot for managing group commands and automating tasks.",
   version: "v4.0.0",
     channelUrl: "https://whatsapp.com/channel/0029VbCiP1Y1noywqpmoSz2z",
-  updateZipUrl: "https://github.com/mruniquehacker/IANENIGMA MD-MD/archive/refs/heads/main.zip",
+  updateZipUrl: "https://github.com/ianenigma4-rgb/Ianenigma-official-bot/archive/refs/heads/main.zip",
 };
 
 module.exports = settings;
