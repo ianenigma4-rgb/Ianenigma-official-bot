@@ -1,0 +1,41 @@
+{
+  "name": "IANENIGMA MD BOT",
+  "description": "IANENIGMA MD — DC Universe themed WhatsApp Multi-Device Bot v4.0.0",
+  "logo": "https://raw.githubusercontent.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-/main/assets/bot_image.jpg",
+  "keywords": ["whatsapp", "bot", "ianenigma", "dc-themes", "baileys"],
+  "repository": "https://github.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-",
+  "buildpacks": [
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "PHONE_NUMBER": {
+      "description": "Your WhatsApp number WITHOUT + (e.g. 256746724547)",
+      "required": true
+    },
+    "OWNER_NUMBER": {
+      "description": "Owner number for full access. Defaults to PHONE_NUMBER if blank.",
+      "required": false
+    },
+    "SESSION_ID": {
+      "description": "Your session string. Get it from the pairing URL. Leave blank to pair fresh.",
+      "required": false
+    },
+    "BOT_MODE": {
+      "description": "public or private",
+      "value": "public",
+      "required": false
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "eco"
+    }
+  },
+  "stack": "heroku-22"
+}
