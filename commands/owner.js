@@ -1,0 +1,34 @@
+const settings = require('../settings');
+
+async function ownerCommand(sock, chatId, message) {
+    const channel = settings.channelUrl || 'https://whatsapp.com/channel/0029VbCiP1Y1noywqpmoSz2z';
+    const repo = settings.repoUrl || null;
+
+    // Send contact card
+    const vcard =
+        `BEGIN:VCARD\n` +
+        `VERSION:3.0\n` +
+        `FN:${settings.botOwner || 'IANENIGMA'}\n` +
+        `TEL;waid=${settings.ownerNumber}:${settings.ownerNumber}\n` +
+        `END:VCARD`;
+
+    await sock.sendMessage(chatId, {
+        contacts: { displayName: settings.botOwner || 'IANENIGMA', contacts: [{ vcard }] }
+    });
+
+    // Send owner info message with channel link
+    await sock.sendMessage(chatId, {
+        text: `👤 *BOT OWNER*\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `🧠 *Name:* IANENIGMA\n` +
+              `🌍 *Location:* Uganda 🇺🇬\n` +
+              `🎭 *Title:* The Architect\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `📢 *WhatsApp Channel:*\n` +
+              `${channel}\n` +
+              `━━━━━━━━━━━━━━━━━━━━━━━\n` +
+              `_Join the channel to stay updated on new features, updates and announcements for IANENIGMA MD BOT._`
+    }, { quoted: message });
+}
+
+module.exports = ownerCommand;
