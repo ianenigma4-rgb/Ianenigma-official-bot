@@ -14,32 +14,13 @@ const fallbackRoasts = [
 ];
 
 async function getAIRoast(name) {
-    const prompt = `Give me one savage but funny roast about a person named ${name}. Keep it under 2 sentences. No disclaimers, just the roast.`;
-
-    const apis = [
-        async () => {
-            const r = await axios.get(`https://api.giftedtech.my.id/api/ai/geminiai?apikey=gifted&q=${encodeURIComponent(prompt)}`, { timeout: 8000 });
-            return r.data?.result || r.data?.answer || r.data?.response;
-        },
-        async () => {
-            const r = await axios.get(`https://zellapi.autos/ai/chatbot?text=${encodeURIComponent(prompt)}`, { timeout: 8000 });
-            return r.data?.result;
-        },
-        async () => {
-            const r = await axios.get(`https://vapis.my.id/api/gemini?q=${encodeURIComponent(prompt)}`, { timeout: 8000 });
-            return r.data?.result || r.data?.response;
-        },
-    ];
-
-    for (const call of apis) {
-        try {
-            const result = await call();
-            if (result && typeof result === 'string' && result.trim().length > 10) {
-                return result.trim();
-            }
-        } catch { }
-    }
-
+    const prompt = `Give me one savage but funny roast about a person named ${name}. Keep it under 2 sentences. No disclaimers or explanations, just the roast itself.`;
+    try {
+        const url = `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&seed=${Date.now() % 9999}`;
+        const res = await axios.get(url, { timeout: 15000, responseType: 'text' });
+        const text = typeof res.data === 'string' ? res.data.trim() : null;
+        if (text && text.length > 10) return text;
+    } catch { }
     return fallbackRoasts[Math.floor(Math.random() * fallbackRoasts.length)];
 }
 

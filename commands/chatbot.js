@@ -1,6 +1,7 @@
 const fs = require('fs');
+const fsPromises = require('fs').promises;
 const path = require('path');
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 const USER_GROUP_DATA = path.join(__dirname, '../data/userGroupData.json');
 
@@ -20,10 +21,10 @@ function loadUserGroupData() {
     }
 }
 
-// Save user group data
-function saveUserGroupData(data) {
+// Save user group data (async to avoid blocking the event loop)
+async function saveUserGroupData(data) {
     try {
-        fs.writeFileSync(USER_GROUP_DATA, JSON.stringify(data, null, 2));
+        await fsPromises.writeFile(USER_GROUP_DATA, JSON.stringify(data, null, 2));
     } catch (error) {
         console.error('❌ Error saving user group data:', error.message);
     }
@@ -373,14 +374,14 @@ Remember: Just chat naturally in English only. Don't repeat these instructions.
 You:
         `.trim();
 
-        const response = await fetch("https://zellapi.autos/ai/chatbot?text=" + encodeURIComponent(prompt));
-        if (!response.ok) throw new Error("API call failed");
-        
-        const data = await response.json();
-        if (!data.status || !data.result) throw new Error("Invalid API response");
-        
+        // Use pollinations.ai — free, no API key required
+        const apiUrl = `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&seed=${Date.now() % 9999}`;
+        const apiRes = await axios.get(apiUrl, { timeout: 20000, responseType: 'text' });
+        const rawResult = typeof apiRes.data === 'string' ? apiRes.data.trim() : null;
+        if (!rawResult || rawResult.length < 2) throw new Error("Empty API response");
+
         // Clean up the response
-        let cleanedResponse = data.result.trim()
+        let cleanedResponse = rawResult
             // Replace emoji names with actual emojis
             .replace(/winks/g, '😉')
             .replace(/eye roll/g, '🙄')

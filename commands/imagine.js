@@ -1,12 +1,24 @@
 const axios = require('axios');
-const { fetchBuffer } = require('../lib/myfunc');
+
+// ── Pollinations.ai image API — completely free, no key required ─────────────
+// GET https://image.pollinations.ai/prompt/{prompt}?model=flux&width=1024&height=1024&nologo=true
+// Returns image bytes directly (JPEG/PNG)
+async function generateImage(prompt, model = 'flux') {
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?model=${model}&width=1024&height=1024&nologo=true&seed=${Date.now() % 99999}`;
+    const response = await axios.get(url, {
+        responseType: 'arraybuffer',
+        timeout: 60000,
+        maxRedirects: 5,
+    });
+    if (!response.data || response.data.byteLength < 500) throw new Error('Empty image response');
+    return Buffer.from(response.data);
+}
 
 async function imagineCommand(sock, chatId, message) {
     try {
         const rawText = message.message?.conversation?.trim() ||
                         message.message?.extendedTextMessage?.text?.trim() || '';
 
-        // Strip the command word (works for .imagine, .flux, .dalle, etc.)
         const imagePrompt = rawText.replace(/^\S+\s*/, '').trim();
 
         if (!imagePrompt) {
@@ -17,33 +29,21 @@ async function imagineCommand(sock, chatId, message) {
         }
 
         await sock.sendMessage(chatId, {
-            text: '🎨 Generating your image... Please wait.'
+            text: '🎨 Generating your image... Please wait ⏳'
         }, { quoted: message });
 
         const enhancedPrompt = enhancePrompt(imagePrompt);
 
-        // Try multiple APIs for reliability
-        const apis = [
-            `https://shizoapi.onrender.com/api/ai/imagine?apikey=shizo&query=${encodeURIComponent(enhancedPrompt)}`,
-            `https://api.giftedtech.my.id/api/ai/imagine?apikey=gifted&q=${encodeURIComponent(enhancedPrompt)}`,
-            `https://api.siputzx.my.id/api/ai/imagine?q=${encodeURIComponent(enhancedPrompt)}`,
-        ];
-
+        // Try flux first, then turbo as fallback
         let imageBuffer = null;
-        for (const apiUrl of apis) {
+        for (const model of ['flux', 'turbo', 'flux-realism']) {
             try {
-                const response = await axios.get(apiUrl, {
-                    responseType: 'arraybuffer',
-                    timeout: 30000
-                });
-                if (response.data && response.data.byteLength > 500) {
-                    imageBuffer = Buffer.from(response.data);
-                    break;
-                }
+                imageBuffer = await generateImage(enhancedPrompt, model);
+                if (imageBuffer) break;
             } catch { continue; }
         }
 
-        if (!imageBuffer) throw new Error('All image APIs failed');
+        if (!imageBuffer) throw new Error('All image models failed');
 
         await sock.sendMessage(chatId, {
             image: imageBuffer,
@@ -51,7 +51,7 @@ async function imagineCommand(sock, chatId, message) {
         }, { quoted: message });
 
     } catch (error) {
-        console.error('Error in imagine/flux command:', error);
+        console.error('Error in imagine/flux command:', error.message);
         await sock.sendMessage(chatId, {
             text: '❌ Failed to generate image. Please try again later.'
         }, { quoted: message });
@@ -59,16 +59,12 @@ async function imagineCommand(sock, chatId, message) {
 }
 
 function enhancePrompt(prompt) {
-    const qualityEnhancers = [
-        'high quality', 'detailed', 'masterpiece', 'best quality',
-        'ultra realistic', '4k', 'highly detailed', 'professional photography',
-        'cinematic lighting', 'sharp focus'
+    const enhancers = [
+        'high quality', 'detailed', 'masterpiece',
+        'ultra realistic', '4k', 'cinematic lighting', 'sharp focus'
     ];
-    const numEnhancers = Math.floor(Math.random() * 2) + 3;
-    const selectedEnhancers = qualityEnhancers
-        .sort(() => Math.random() - 0.5)
-        .slice(0, numEnhancers);
-    return `${prompt}, ${selectedEnhancers.join(', ')}`;
+    const picked = enhancers.sort(() => Math.random() - 0.5).slice(0, 3);
+    return `${prompt}, ${picked.join(', ')}`;
 }
 
 module.exports = imagineCommand;

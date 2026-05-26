@@ -1,56 +1,26 @@
 const axios = require('axios');
 
+// ── Pollinations.ai text API — completely free, no key required ──────────────
+// GET https://text.pollinations.ai/{prompt}?model=openai|mistral|...
+// Returns plain text response
+async function pollinationsText(prompt, model = 'openai') {
+    const url = `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=${model}&seed=${Date.now() % 9999}`;
+    const res = await axios.get(url, { timeout: 25000, responseType: 'text' });
+    const text = typeof res.data === 'string' ? res.data.trim() : JSON.stringify(res.data);
+    if (!text || text.length < 2) throw new Error('Empty response');
+    return text;
+}
+
 const GPT_APIS = [
-    async (query) => {
-        const res = await axios.get(`https://api.giftedtech.my.id/api/ai/gpt4o?apikey=gifted&q=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const ans = res.data?.result || res.data?.message || res.data?.answer;
-        if (!ans) throw new Error('No result');
-        return ans;
-    },
-    async (query) => {
-        const res = await axios.get(`https://zellapi.autos/ai/chatbot?text=${encodeURIComponent(query)}`, { timeout: 20000 });
-        if (!res.data?.status || !res.data?.result) throw new Error('No result');
-        return res.data.result;
-    },
-    async (query) => {
-        const res = await axios.get(`https://api.siputzx.my.id/api/ai/gpt4?q=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const ans = res.data?.data || res.data?.result || res.data?.message;
-        if (!ans) throw new Error('No result');
-        return ans;
-    },
+    async (query) => pollinationsText(query, 'openai'),
+    async (query) => pollinationsText(query, 'openai-large'),
+    async (query) => pollinationsText(query, 'mistral'),
 ];
 
 const GEMINI_APIS = [
-    async (query) => {
-        const res = await axios.get(`https://api.giftedtech.my.id/api/ai/geminiai?apikey=gifted&q=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const ans = res.data?.result || res.data?.message;
-        if (!ans) throw new Error('No result');
-        return ans;
-    },
-    async (query) => {
-        const res = await axios.get(`https://vapis.my.id/api/gemini?q=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const ans = res.data?.message || res.data?.data || res.data?.answer || res.data?.result;
-        if (!ans) throw new Error('No result');
-        return ans;
-    },
-    async (query) => {
-        const res = await axios.get(`https://api.siputzx.my.id/api/ai/gemini-pro?content=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const ans = res.data?.data || res.data?.result || res.data?.message;
-        if (!ans) throw new Error('No result');
-        return ans;
-    },
-    async (query) => {
-        const res = await axios.get(`https://api.ryzendesu.vip/api/ai/gemini?text=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const ans = res.data?.answer || res.data?.result || res.data?.data;
-        if (!ans) throw new Error('No result');
-        return ans;
-    },
-    async (query) => {
-        const res = await axios.get(`https://api.giftedtech.my.id/api/ai/geminiaipro?apikey=gifted&q=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const ans = res.data?.result || res.data?.message;
-        if (!ans) throw new Error('No result');
-        return ans;
-    },
+    async (query) => pollinationsText(query, 'gemini'),
+    async (query) => pollinationsText(query, 'openai'),
+    async (query) => pollinationsText(query, 'openai-large'),
 ];
 
 async function aiCommand(sock, chatId, message) {
@@ -80,14 +50,11 @@ async function aiCommand(sock, chatId, message) {
         const apis = isGpt ? GPT_APIS : GEMINI_APIS;
         const label = isGpt ? '🤖 *GPT*' : '✨ *GEMINI*';
 
-        // Add English instruction to query
-        const englishQuery = `Please respond in English only. ${query}`;
-
         let answer = null;
         let lastError = '';
         for (const api of apis) {
             try {
-                answer = await api(englishQuery);
+                answer = await api(query);
                 if (answer) break;
             } catch (e) {
                 lastError = e.message;

@@ -21,40 +21,16 @@ const fallbackCompliments = [
     "Your enthusiasm is truly inspiring!",
     "You are capable of achieving great things.",
     "You always know how to make someone feel special.",
-    "Your confidence is admirable.",
-    "You have a beautiful soul.",
-    "Your generosity knows no limits.",
-    "You have a great eye for detail.",
-    "Your passion is truly motivating!",
-    "You are an amazing listener.",
-    "You're stronger than you think!",
-    "Your laughter is infectious.",
-    "You have a natural gift for making others feel valued.",
-    "You make the world a better place just by being in it.",
 ];
 
 async function getAICompliment(name) {
-    const prompt = `Write one genuine, warm, and creative compliment for a person named ${name}. Make it heartfelt and specific. Keep it under 2 sentences. No disclaimers, just the compliment.`;
-    const apis = [
-        async () => {
-            const r = await axios.get(`https://api.giftedtech.my.id/api/ai/geminiai?apikey=gifted&q=${encodeURIComponent(prompt)}`, { timeout: 8000 });
-            return r.data?.result || r.data?.answer || r.data?.response;
-        },
-        async () => {
-            const r = await axios.get(`https://zellapi.autos/ai/chatbot?text=${encodeURIComponent(prompt)}`, { timeout: 8000 });
-            return r.data?.result;
-        },
-        async () => {
-            const r = await axios.get(`https://vapis.my.id/api/gemini?q=${encodeURIComponent(prompt)}`, { timeout: 8000 });
-            return r.data?.result || r.data?.response;
-        },
-    ];
-    for (const call of apis) {
-        try {
-            const result = await call();
-            if (result && typeof result === 'string' && result.trim().length > 10) return result.trim();
-        } catch { }
-    }
+    const prompt = `Write one genuine, warm, and creative compliment for a person named ${name}. Make it heartfelt and specific. Keep it under 2 sentences. No disclaimers, just the compliment itself.`;
+    try {
+        const url = `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&seed=${Date.now() % 9999}`;
+        const res = await axios.get(url, { timeout: 15000, responseType: 'text' });
+        const text = typeof res.data === 'string' ? res.data.trim() : null;
+        if (text && text.length > 10) return text;
+    } catch { }
     return fallbackCompliments[Math.floor(Math.random() * fallbackCompliments.length)];
 }
 
