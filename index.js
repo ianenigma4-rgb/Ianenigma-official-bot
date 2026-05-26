@@ -100,7 +100,7 @@ app.listen(port, () => {
 // the session folder using an ABSOLUTE path so it works on any host panel.
 // Handles multiple common formats:
 //   • plain base64 of creds.json
-//   • PREFIX;;;base64  (e.g. KNIGHT;;;xxx  or  IANENIGMA;;;xxx)
+//   • PREFIX;;;base64  (e.g. IANENIGMA;;;xxx)
 //   • data:...;base64,xxx  (data URI format)
 const SESSION_DIR = require('path').join(__dirname, 'session')
 ;(function loadSessionFromEnv() {
@@ -138,9 +138,9 @@ const SESSION_DIR = require('path').join(__dirname, 'session')
 
         // Strip any known prefix formats before the base64 payload
         let raw = sessionId.trim()
-        // Format: ANYTHING;;;base64payload  (e.g. KNIGHT;;;, IANENIGMA;;;)
+        // Format: ANYTHING;;;base64payload  (e.g. IANENIGMA;;;)
         if (raw.includes(';;;')) raw = raw.split(';;;').pop().trim()
-        // Format: ANYTHING:~base64payload  (e.g. ADEVOS-X:~, KNIGHT:~)
+        // Format: ANYTHING:~base64payload  (e.g. ADEVOS-X:~, IANENIGMA:~)
         if (raw.includes(':~')) raw = raw.split(':~').pop().trim()
         // Format: data:...;base64,payload
         raw = raw.replace(/^data:[^;]+;base64,/, '').trim()
