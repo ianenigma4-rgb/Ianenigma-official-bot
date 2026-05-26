@@ -1,0 +1,28 @@
+╔══════════════════════════════════════════════════════════════╗
+║              SESSION / CREDENTIALS FOLDER                    ║
+╚══════════════════════════════════════════════════════════════╝
+
+This folder stores your WhatsApp session so the bot reconnects
+automatically without needing to scan or pair every restart.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OPTION A — Drop creds.json here directly (easiest)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Go to https://knight-bot-paircode.onrender.com
+2. Enter your number → pair → download / copy creds.json
+3. Place that creds.json file in THIS folder (session/creds.json)
+4. Restart the bot — it will connect without asking for a code.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OPTION B — Use SESSION_ID environment variable
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Go to https://knight-bot-paircode.onrender.com
+2. Enter your number → pair → copy the SESSION_ID string
+3. Open .env (in the bot root folder) and paste it next to SESSION_ID=
+   OR set SESSION_ID in your hosting panel's environment variables tab
+4. Restart the bot — session is decoded and loaded automatically.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTE: Option A takes priority. If creds.json already exists here,
+SESSION_ID will not overwrite it (your session is safe on restart).
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
