@@ -462,7 +462,12 @@ async function startXeonBotInc() {
 
             try {
                 const botNumber = XeonBotInc.user.id.split(':')[0] + '@s.whatsapp.net';
-                const ownerJid = (process.env.OWNER_NUMBER || require('./settings').ownerNumber) + '@s.whatsapp.net';
+                // Only send to a configured OWNER_NUMBER env var — if not set, fall back to
+                  // the bot's own number (self-message). This prevents other people who clone
+                  // this bot without setting OWNER_NUMBER from accidentally messaging the original dev.
+                  const ownerJid = process.env.OWNER_NUMBER
+                      ? process.env.OWNER_NUMBER + '@s.whatsapp.net'
+                      : botNumber;
                 const { loadLocation, getOwnerTime } = require('./lib/locationManager');
                 const loc = loadLocation();
                 const timeStr = getOwnerTime();
