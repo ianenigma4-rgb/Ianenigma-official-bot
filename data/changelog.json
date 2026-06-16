@@ -1,5 +1,14 @@
 [
   {
+    "version": "v5.1.1",
+    "date": "2026-06-16",
+    "changes": [
+      "Fixed: admins sometimes got 'only admins' error on admin commands",
+      "Root cause: sender LID matching didn't strip session suffix (e.g. :42) like the bot-admin check did",
+      "Fix applies to all admin commands (kick, ban, mute, promote, antilink, etc.) since they share one isAdmin() function"
+    ]
+  },
+  {
     "version": "v5.1.0",
     "date": "2026-06-16",
     "changes": [

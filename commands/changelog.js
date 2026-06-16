@@ -5,6 +5,7 @@ const { channelInfo } = require('../lib/messageConfig');
 
 const DATA_FILE = path.join(__dirname, '../data/changelog.json');
 const DEFAULT_LOG = [
+    { version: 'v5.1.1', date: '2026-06-16', changes: ["Fixed: admins sometimes got 'only admins' error incorrectly", 'Root cause: sender LID matching missing session-suffix stripping', 'Fix applies bot-wide to all admin commands'] },
     { version: 'v5.1.0', date: '2026-06-16', changes: ['Auto-translate: detects any language, replies in English', '3-API fallback chain (Google, MyMemory, LibreTranslate)', 'Per-chat and global auto-translate toggle', 'Antiban bio rotation expanded to 233 quotes', 'Rebuilt .menu — fixed duplicate sections', 'New Ian Enigma Empire banner image', 'README overhaul with contributors and badges', 'Credited ADEVOS for pairing site infrastructure'] },
     { version: 'v5.0.0', date: '2025-07-01', changes: ['Added 28 new features', 'Wordle daily game', 'Quiz with leaderboard', 'RPS challenges', 'Temp-ban system', 'Modlog system', 'Slowmode per-member', 'Lockwords mute', 'Birthday auto-greet', 'Profile and rep system', 'Marry/divorce system', 'Inventory daily items', 'Backup and restore', 'ytmp3/ytmp4 via yt-dlp', 'AI summarize', 'Auto-rules DM', 'Auto-kick unverified', 'feedback command', 'Menu keyword search'] },
     { version: 'v4.0.0', date: '2024-12-01', changes: ['185+ commands', 'Multi-session support', 'Anti-ban protection', 'DC/Marvel themes'] },
