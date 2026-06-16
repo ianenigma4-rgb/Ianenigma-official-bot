@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { downloadThemeImage, generateThemeAudio, getThemeImageBuffer } = require('../lib/themeAssets');
 
-const themePath = path.join(__dirname, '../data/theme.json');
+const themePath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'theme.json');
 
 const THEMES = {
     batman: {

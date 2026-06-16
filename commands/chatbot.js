@@ -3,7 +3,8 @@ const fsPromises = require('fs').promises;
 const path = require('path');
 const axios = require('axios');
 
-const USER_GROUP_DATA = path.join(__dirname, '../data/userGroupData.json');
+const USER_GROUP_DATA = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'userGroupData.json');
+const isOwnerLib = require('../lib/isOwner');
 
 // In-memory storage for chat history and user info
 const chatMemory = {
@@ -79,12 +80,8 @@ async function handleChatbotCommand(sock, chatId, message, match) {
 
     const data = loadUserGroupData();
     
-    // Get bot's number
-    const botNumber = sock.user.id.split(':')[0] + '@s.whatsapp.net';
-    
-    // Check if sender is bot owner
-    const senderId = message.key.participant || message.participant || message.pushName || message.key.remoteJid;
-    const isOwner = senderId === botNumber;
+    const senderId = message.key.participant || message.key.remoteJid;
+    const isOwner = await isOwnerLib(senderId, sock, chatId);
 
     // If it's the bot owner, allow access immediately
     if (isOwner) {

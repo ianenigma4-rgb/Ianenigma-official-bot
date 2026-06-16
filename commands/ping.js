@@ -1,5 +1,6 @@
 const os = require('os');
 const settings = require('../settings.js');
+function getThemeSafe() { try { return require('./theme').getTheme(); } catch { return { name: 'Batman', quote: 'Gotham is safe.' }; } }
 
 function formatTime(seconds) {
     const days = Math.floor(seconds / 86400);

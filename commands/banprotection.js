@@ -7,14 +7,14 @@ async function banprotectionCommand(sock, chatId, message) {
     let antibanStatus = '❌ OFF';
     let antibanInterval = 30;
     try {
-        const ab = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/antiban.json'), 'utf8'));
+        const ab = JSON.parse(fs.readFileSync(path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'antiban.json'), 'utf8'));
         antibanStatus = ab.enabled ? '✅ ACTIVE' : '❌ OFF';
         antibanInterval = ab.interval || 30;
     } catch {}
 
     let antifloodStatus = '❌ OFF';
     try {
-        const af = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/antiflood.json'), 'utf8'));
+        const af = JSON.parse(fs.readFileSync(path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'antiflood.json'), 'utf8'));
         const entries = Object.values(af);
         const anyOn = entries.some(g => g.enabled);
         antifloodStatus = anyOn ? '✅ ACTIVE (some groups)' : '❌ OFF';
@@ -22,7 +22,7 @@ async function banprotectionCommand(sock, chatId, message) {
 
     let antiraidStatus = '❌ OFF';
     try {
-        const ar = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/antiraid.json'), 'utf8'));
+        const ar = JSON.parse(fs.readFileSync(path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'antiraid.json'), 'utf8'));
         const anyOn = Object.values(ar).some(g => g.enabled);
         antiraidStatus = anyOn ? '✅ ACTIVE (some groups)' : '❌ OFF';
     } catch {}

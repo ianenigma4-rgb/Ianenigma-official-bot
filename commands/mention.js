@@ -5,7 +5,7 @@ const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
 function loadState() {
 	try {
-		const raw = fs.readFileSync(path.join(__dirname, '..', 'data', 'mention.json'), 'utf8');
+		const raw = fs.readFileSync(path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'mention.json'), 'utf8');
         const state = JSON.parse(raw);
         // If using the built-in default asset, treat it as no custom asset and default to text "Hi"
         if (state && typeof state.assetPath === 'string' && state.assetPath.endsWith('assets/mention_default.webp')) {
@@ -19,7 +19,7 @@ function loadState() {
 }
 
 function saveState(state) {
-	fs.writeFileSync(path.join(__dirname, '..', 'data', 'mention.json'), JSON.stringify(state, null, 2));
+	fs.writeFileSync(path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'mention.json'), JSON.stringify(state, null, 2));
 }
 
 async function ensureDefaultSticker(state) {

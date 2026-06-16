@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const statsPath = path.join(__dirname, '../data/stats.json');
+const statsPath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'stats.json');
 
 function readStats() {
     try {

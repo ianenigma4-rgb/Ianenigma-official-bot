@@ -4,7 +4,7 @@ const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const { writeFile } = require('fs/promises');
 
 const messageStore = new Map();
-const CONFIG_PATH = path.join(__dirname, '../data/antidelete.json');
+const CONFIG_PATH = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'antidelete.json');
 const TEMP_MEDIA_DIR = path.join(__dirname, '../tmp');
 
 if (!fs.existsSync(TEMP_MEDIA_DIR)) {
@@ -66,10 +66,9 @@ async function handleAntideleteCommand(sock, chatId, message, match) {
         return sock.sendMessage(chatId, {
             text: `🗑️ *ANTIDELETE SETTINGS*\n\n` +
                 `• Status: ${config.enabled ? '✅ Enabled' : '❌ Disabled'}\n` +
-                `• In-chat resend: ${config.inChat !== false ? '✅ On' : '❌ Off'}\n\n` +
+                `• Deleted messages are sent to your *inbox only* 📥\n\n` +
                 `*.antidelete on* — enable\n` +
-                `*.antidelete off* — disable\n` +
-                `*.antidelete inchat on/off* — also resend in the same chat`
+                `*.antidelete off* — disable`
         }, { quoted: message });
     }
 
@@ -214,36 +213,7 @@ async function handleMessageRevocation(sock, revocationMessage) {
             try { groupName = (await sock.groupMetadata(chatId)).subject; } catch { }
         }
 
-        // ── 1. Resend back in the SAME chat ──────────────────────────────────
-        if (config.inChat !== false) {
-            const inChatHeader = `🗑️ *Deleted message recovered*\n` +
-                `👤 *By:* @${deleterName} | *From:* @${senderName}\n` +
-                `🕒 ${time}\n` +
-                (content ? `\n💬 ${content}` : '');
-
-            await sock.sendMessage(chatId, {
-                text: inChatHeader,
-                mentions: [deletedBy, sender].filter(Boolean)
-            }).catch(() => { });
-
-            if (mediaType && mediaPath && fs.existsSync(mediaPath)) {
-                const caption = `🗑️ *Deleted ${mediaType}* by @${deleterName}`;
-                const mentions = [deletedBy].filter(Boolean);
-                try {
-                    if (mediaType === 'image') {
-                        await sock.sendMessage(chatId, { image: { url: mediaPath }, caption, mentions });
-                    } else if (mediaType === 'video') {
-                        await sock.sendMessage(chatId, { video: { url: mediaPath }, caption, mentions });
-                    } else if (mediaType === 'sticker') {
-                        await sock.sendMessage(chatId, { sticker: { url: mediaPath } });
-                    } else if (mediaType === 'audio') {
-                        await sock.sendMessage(chatId, { audio: { url: mediaPath }, mimetype: 'audio/mpeg', ptt: false });
-                    }
-                } catch { }
-            }
-        }
-
-        // ── 2. Also send full report to owner DM ─────────────────────────────
+        // ── Send full report to owner DM only ────────────────────────────────
         let ownerReport = `🔰 *ANTIDELETE REPORT* 🔰\n\n` +
             `🗑️ *Deleted by:* @${deleterName}\n` +
             `👤 *Sender:* @${senderName}\n` +

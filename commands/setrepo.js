@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const REPO_FILE = path.join(__dirname, '../data/repo.json');
+const REPO_FILE = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'repo.json');
 
 function load() {
     try {

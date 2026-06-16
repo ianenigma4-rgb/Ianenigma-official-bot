@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const BIO_PATH = path.join(__dirname, '../data/bio.json');
+const BIO_PATH = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'bio.json');
 
 function loadBio() {
     try {

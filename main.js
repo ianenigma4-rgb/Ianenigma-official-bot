@@ -74,7 +74,7 @@ const { tictactoeCommand, handleTicTacToeMove } = require('./commands/tictactoe'
 const { incrementMessageCount, topMembers } = require('./commands/topmembers');
 const ownerCommand = require('./commands/owner');
 const deleteCommand = require('./commands/delete');
-const { handleAntilinkCommand, handleLinkDetection } = require('./commands/antilink');
+const { handleAntilinkCommand } = require('./commands/antilink');
 const { handleAntitagCommand, handleTagDetection } = require('./commands/antitag');
 const { Antilink } = require('./lib/antilink');
 const { handleMentionDetection, mentionToggleCommand, setMentionCommand } = require('./commands/mention');
@@ -158,6 +158,7 @@ const songCommand = require('./commands/song');
 const aiCommand = require('./commands/ai');
 const urlCommand = require('./commands/url');
 const { handleTranslateCommand } = require('./commands/translate');
+const { autotranslateCommand, handleAutoTranslate } = require('./commands/autotranslate');
 const { handleSsCommand } = require('./commands/ss');
 const { addCommandReaction, handleAreactCommand } = require('./lib/reactions');
 // v3 new commands
@@ -197,6 +198,37 @@ const { everyoneCommand } = require('./commands/everyone');
 const { antiraidCommand, checkRaid } = require('./commands/antiraid');
 const { autoreplyCommand, checkAutoreply } = require('./commands/autoreply');
 const { idCommand } = require('./commands/id');
+// ── v5 NEW COMMANDS ───────────────────────────────────────────────────────────
+const summarizeCommand = require('./commands/summarize');
+const wordleCommand = require('./commands/wordle');
+const { quizCommand, answerQuizCommand } = require('./commands/quiz');
+const rpsCommand = require('./commands/rps');
+const { lotteryCommand, lotteryResultsCommand } = require('./commands/lottery');
+const { dailyCommand, initDailyScheduler } = require('./commands/daily');
+const { autorulesCommand, sendAutoRules } = require('./commands/autorules');
+const { autokickCommand, markJoined, markVerified, checkAndKickUnverified } = require('./commands/autokick');
+const { birthdayCommand, checkBirthdays } = require('./commands/birthday');
+const { slowmodeCommand, checkSlowmode } = require('./commands/slowmode');
+const { lockwordsCommand, checkLockwords, isWordMuted } = require('./commands/lockwords');
+const tempbanCommand = require('./commands/tempban');
+const { modlogCommand, logAction } = require('./commands/modlog');
+const ytmp3Command = require('./commands/ytmp3');
+const ytmp4Command = require('./commands/ytmp4');
+const compressCommand = require('./commands/compress');
+const tomp4Command = require('./commands/tomp4');
+const pdfCommand = require('./commands/pdf');
+const { profileCommand, recordJoin } = require('./commands/profile');
+const repCommand = require('./commands/rep');
+const marryCommand = require('./commands/marry');
+const inventoryCommand = require('./commands/inventory');
+const backupCommand = require('./commands/backup');
+const restoreCommand = require('./commands/restore');
+const changelogCommand = require('./commands/changelog');
+const botinfoCommand = require('./commands/botinfo');
+const { feedbackCommand, viewFeedbackCommand } = require('./commands/feedback');
+const menusearchCommand = require('./commands/menusearch');
+// ─────────────────────────────────────────────────────────────────────────────
+
 
 // Global settings
 global.packname = settings.packname;
@@ -587,6 +619,13 @@ async function handleMessages(sock, messageUpdate, printLog) {
                     await handleChatbotResponse(sock, chatId, message, userMessage, senderId);
                 }
             }
+
+            // ── AUTO-TRANSLATE: runs in groups AND DMs ──────────────────────
+            // Uses rawText (original casing) for best translation accuracy
+            if (rawText && rawText.length >= 3) {
+                await handleAutoTranslate(sock, chatId, message, rawText);
+            }
+
             return;
         }
         // In private mode, only owner/sudo can run commands
@@ -1263,6 +1302,12 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 const commandLength = userMessage.startsWith(PREFIX + 'translate') ? 10 : 4;
                 await handleTranslateCommand(sock, chatId, message, userMessage.slice(commandLength));
                 return;
+            case userMessage.startsWith(PREFIX + 'autotranslate') || userMessage.startsWith(PREFIX + 'autotrans') || userMessage.startsWith(PREFIX + 'atr'):
+                {
+                    const atrArgs = rawText.replace(/^\S+\s*/i, '').trim();
+                    await autotranslateCommand(sock, chatId, message, atrArgs, isSenderAdmin, isBotAdmin);
+                }
+                break;
             case userMessage.startsWith(PREFIX + 'ss') || userMessage.startsWith(PREFIX + 'ssweb') || userMessage.startsWith(PREFIX + 'screenshot'):
                 {
                     const ssUrl = rawText.replace(/^\S+\s*/i, '').trim();
@@ -1621,8 +1666,139 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 await setprefixCommand(sock, chatId, message, rawText, isOwnerOrSudoCheck);
                 commandExecuted = true;
                 break;
+            // ─── v5 NEW COMMANDS ──────────────────────────────────────────────────
+            case (userMessage === PREFIX + 'summarize' || userMessage === PREFIX + 'summary'):
+                await summarizeCommand(sock, chatId, message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'wordle'):
+                await wordleCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'quiz'):
+                await quizCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'answer ') || userMessage.startsWith(PREFIX + 'ans ')):
+                await answerQuizCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'rps'):
+                await rpsCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'lottery results' || userMessage === PREFIX + 'lotteryresults'):
+                await lotteryResultsCommand(sock, chatId, message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'lottery'):
+                await lotteryCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'daily'):
+                await dailyCommand(sock, chatId, senderId, userMessage.slice(1), message, isSenderAdmin);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'autorules'):
+                await autorulesCommand(sock, chatId, senderId, userMessage.slice(1), message, isSenderAdmin);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'autokick'):
+                await autokickCommand(sock, chatId, senderId, userMessage.slice(1), message, isSenderAdmin);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'birthday') || userMessage === PREFIX + 'bday'):
+                await birthdayCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'slowmode'):
+                await slowmodeCommand(sock, chatId, senderId, userMessage.slice(1), message, isSenderAdmin, isBotAdmin);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'lockwords') || userMessage.startsWith(PREFIX + 'lockword')):
+                await lockwordsCommand(sock, chatId, senderId, userMessage.slice(1), message, isSenderAdmin, isBotAdmin);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'tempban'):
+                await tempbanCommand(sock, chatId, senderId, userMessage.slice(1), message, isSenderAdmin, isBotAdmin);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'modlog'):
+                await modlogCommand(sock, chatId, senderId, userMessage.slice(1), message, isSenderAdmin, isOwnerOrSudoCheck);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'ytmp3') || userMessage.startsWith(PREFIX + 'ymp3')):
+                await ytmp3Command(sock, chatId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'ytmp4') || userMessage.startsWith(PREFIX + 'ymp4')):
+                await ytmp4Command(sock, chatId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'compress'):
+                await compressCommand(sock, chatId, message);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'tomp4' || userMessage === PREFIX + 'togif'):
+                await tomp4Command(sock, chatId, message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'pdf'):
+                await pdfCommand(sock, chatId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'profile' || userMessage.startsWith(PREFIX + 'profile ')):
+                await profileCommand(sock, chatId, senderId, message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'rep'):
+                await repCommand(sock, chatId, senderId, message);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'marry') || userMessage.startsWith(PREFIX + 'divorce')):
+                await marryCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'inventory') || userMessage === PREFIX + 'inv'):
+                await inventoryCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'backup'):
+                await backupCommand(sock, chatId, senderId, message, isOwnerOrSudoCheck);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'restore'):
+                await restoreCommand(sock, chatId, senderId, message, isOwnerOrSudoCheck);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'changelog' || userMessage === PREFIX + 'changes'):
+                await changelogCommand(sock, chatId, message);
+                commandExecuted = true;
+                break;
+            case (userMessage === PREFIX + 'botinfo' || userMessage === PREFIX + 'info'):
+                await botinfoCommand(sock, chatId, message);
+                commandExecuted = true;
+                break;
+            case userMessage.startsWith(PREFIX + 'feedback'):
+                await feedbackCommand(sock, chatId, senderId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'viewfeedback') || userMessage.startsWith(PREFIX + 'feedbacks')):
+                await viewFeedbackCommand(sock, chatId, message, isOwnerOrSudoCheck);
+                commandExecuted = true;
+                break;
+            case (userMessage.startsWith(PREFIX + 'menu search') || userMessage.startsWith(PREFIX + 'search ') || userMessage.startsWith(PREFIX + 'find ')):
+                await menusearchCommand(sock, chatId, userMessage.slice(1), message);
+                commandExecuted = true;
+                break;
             default:
                 if (isGroup) {
+                    // v5: slowmode + lockwords check + verify autokick
+                    if (userMessage && !userMessage.startsWith(PREFIX)) {
+                        try { await checkSlowmode(sock, chatId, senderId, message, isSenderAdmin); } catch(e) {}
+                        try { await checkLockwords(sock, chatId, senderId, userMessage, isSenderAdmin); } catch(e) {}
+                        try { markVerified(chatId, senderId); } catch(e) {}
+                    }
                     // Handle non-command group messages
                     if (userMessage) {  // Make sure there's a message
                         await handleChatbotResponse(sock, chatId, message, userMessage, senderId);
@@ -1700,6 +1876,12 @@ async function handleGroupParticipantUpdate(sock, update) {
         // Handle join events
         if (action === 'add') {
             await handleJoinEvent(sock, id, participants);
+            // v5: auto-rules DM + autokick tracking + profile init
+            for (const p of participants) {
+                try { await sendAutoRules(sock, id, p); } catch(e) {}
+                try { markJoined(id, p); } catch(e) {}
+                try { recordJoin(p); } catch(e) {}
+            }
             // Anti-raid check on every join
             try { await checkRaid(sock, id, participants); } catch (e) {}
         }
@@ -1720,5 +1902,10 @@ module.exports = {
     handleStatus: async (sock, status) => {
         await handleStatusUpdate(sock, status);
     },
-    startScheduler,
+    startScheduler: (sock) => {
+        startScheduler(sock);
+        try { initDailyScheduler(sock); } catch(e) { console.error('dailyScheduler init:', e.message); }
+        setInterval(() => { try { checkBirthdays(sock); } catch(e) {} }, 60 * 60 * 1000);
+        setInterval(() => { try { checkAndKickUnverified(sock); } catch(e) {} }, 30 * 60 * 1000);
+    },
 };

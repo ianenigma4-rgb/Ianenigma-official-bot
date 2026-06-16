@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const schedulePath = path.join(__dirname, '../data/schedule.json');
+const schedulePath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'schedule.json');
 
 function readSchedules() {
     try {
@@ -30,7 +30,7 @@ async function scheduleCommand(sock, chatId, message, args, senderId) {
                     `.schedule remove <id>\n\n` +
                     `*Example:*\n` +
                     `.schedule add 08:00 Good morning everyone! 🌅\n\n` +
-                    `_Time is in 24-hour format (UTC). The bot will send the message to this chat every day at that time._`,
+                    `_Time is in 24-hour format based on your set location. Use .setlocation to configure your timezone._`,
             }, { quoted: message });
             return;
         }
@@ -71,7 +71,7 @@ async function scheduleCommand(sock, chatId, message, args, senderId) {
             saveSchedules(schedules);
 
             await sock.sendMessage(chatId, {
-                text: `✅ *Scheduled!*\n\n🆔 ID: ${id}\n⏰ Time: ${timeArg} (UTC) daily\n📝 Message: ${msgText}`,
+                text: `✅ *Scheduled!*\n\n🆔 ID: ${id}\n⏰ Time: ${timeArg} (your local time) daily\n📝 Message: ${msgText}`,
             }, { quoted: message });
             return;
         }
@@ -126,8 +126,28 @@ function startScheduler(sock) {
     setInterval(async () => {
         try {
             const now = new Date();
-            const hh = String(now.getUTCHours()).padStart(2, '0');
-            const mm = String(now.getUTCMinutes()).padStart(2, '0');
+            // Use owner local time if location is configured, else UTC
+            let hh, mm;
+            try {
+                const { getOwnerTime } = require('./lib/locationManager');
+                const timeStr = getOwnerTime(); // e.g. "08:32 AM"
+                const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+                if (match) {
+                    let h = parseInt(match[1]);
+                    const m = parseInt(match[2]);
+                    const ampm = match[3].toUpperCase();
+                    if (ampm === 'PM' && h !== 12) h += 12;
+                    if (ampm === 'AM' && h === 12) h = 0;
+                    hh = String(h).padStart(2, '0');
+                    mm = String(m).padStart(2, '0');
+                } else {
+                    hh = String(now.getUTCHours()).padStart(2, '0');
+                    mm = String(now.getUTCMinutes()).padStart(2, '0');
+                }
+            } catch {
+                hh = String(now.getUTCHours()).padStart(2, '0');
+                mm = String(now.getUTCMinutes()).padStart(2, '0');
+            }
             const currentTime = `${hh}:${mm}`;
 
             const schedules = readSchedules();

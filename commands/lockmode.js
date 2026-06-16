@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const CONFIG_PATH = path.join(__dirname, '../data/lockmode.json');
+const CONFIG_PATH = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'lockmode.json');
 
 function readConfig() {
     try {

@@ -1,63 +1,72 @@
 const yts = require('yt-search');
 const axios = require('axios');
 
+const AUDIO_APIS = [
+    (url) => `https://apis-keith.vercel.app/download/dlmp3?url=${url}`,
+    (url) => `https://api.giftedtech.my.id/api/download/ytmp3?apikey=gifted&url=${url}`,
+    (url) => `https://api.dreaded.site/api/ytmp3?url=${url}`,
+];
+
 async function playCommand(sock, chatId, message) {
     try {
         const text = message.message?.conversation || message.message?.extendedTextMessage?.text;
-        const searchQuery = text.split(' ').slice(1).join(' ').trim();
-        
+        const searchQuery = text?.split(' ').slice(1).join(' ').trim();
+
         if (!searchQuery) {
-            return await sock.sendMessage(chatId, { 
-                text: "What song do you want to download?"
-            });
+            return sock.sendMessage(chatId, {
+                text: '🎵 Send a song name!\n\nExample: *.play Blinding Lights*'
+            }, { quoted: message });
         }
 
-        // Search for the song
+        await sock.sendMessage(chatId, { react: { text: '🎵', key: message.key } });
+
         const { videos } = await yts(searchQuery);
         if (!videos || videos.length === 0) {
-            return await sock.sendMessage(chatId, { 
-                text: "No songs found!"
-            });
+            return sock.sendMessage(chatId, { text: '❌ No songs found for that search.' }, { quoted: message });
         }
 
-        // Send loading message
-        await sock.sendMessage(chatId, {
-            text: "_Please wait your download is in progress_"
-        });
-
-        // Get the first video result
         const video = videos[0];
-        const urlYt = video.url;
+        const ytUrl = encodeURIComponent(video.url);
 
-        // Fetch audio data from API
-        const response = await axios.get(`https://apis-keith.vercel.app/download/dlmp3?url=${urlYt}`);
-        const data = response.data;
+        await sock.sendMessage(chatId, {
+            text: `🎵 *${video.title}*\n⏱️ ${video.timestamp} | 👁️ ${video.views?.toLocaleString() || '?'} views\n\n_Downloading..._`
+        }, { quoted: message });
 
-        if (!data || !data.status || !data.result || !data.result.downloadUrl) {
-            return await sock.sendMessage(chatId, { 
-                text: "Failed to fetch audio from the API. Please try again later."
-            });
+        let audioUrl = null;
+        let title = video.title;
+
+        for (const buildUrl of AUDIO_APIS) {
+            try {
+                const res = await axios.get(buildUrl(ytUrl), { timeout: 20000 });
+                const data = res.data;
+                // Handle different API response formats
+                const url = data?.result?.downloadUrl || data?.result?.download || data?.data?.download || data?.download || data?.url;
+                if (url) {
+                    audioUrl = url;
+                    title = data?.result?.title || data?.data?.title || title;
+                    break;
+                }
+            } catch { continue; }
         }
 
-        const audioUrl = data.result.downloadUrl;
-        const title = data.result.title;
+        if (!audioUrl) {
+            return sock.sendMessage(chatId, {
+                text: '❌ Download failed. All audio APIs are down. Try again later.'
+            }, { quoted: message });
+        }
 
-        // Send the audio
         await sock.sendMessage(chatId, {
             audio: { url: audioUrl },
-            mimetype: "audio/mpeg",
+            mimetype: 'audio/mpeg',
             fileName: `${title}.mp3`
         }, { quoted: message });
 
     } catch (error) {
-        console.error('Error in song2 command:', error);
-        await sock.sendMessage(chatId, { 
-            text: "Download failed. Please try again later."
-        });
+        console.error('play command error:', error.message);
+        await sock.sendMessage(chatId, {
+            text: '❌ Download failed. Please try again later.'
+        }, { quoted: message });
     }
 }
 
-module.exports = playCommand; 
-
-/*Powered by IANENIGMA-BOT*
-*Credits to IANENIGMA*/
+module.exports = playCommand;

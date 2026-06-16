@@ -1,0 +1,82 @@
+[
+  {
+    "version": "v5.1.0",
+    "date": "2026-06-16",
+    "changes": [
+      "Auto-translate: detects any language, replies in English",
+      "Auto-translate 3-API fallback chain (Google, MyMemory, LibreTranslate)",
+      "Auto-translate per-chat and global toggle (.autotranslate)",
+      "Antiban bio rotation expanded to 233 unique quotes",
+      "Rebuilt .menu — removed duplicate sections, fixed formatting",
+      "New Ian Enigma Empire banner image set as default menu image",
+      "README overhaul with contributor section and visual badges",
+      "Credited ADEVOS for pairing site infrastructure",
+      "Fixed version mismatch between settings and changelog"
+    ]
+  },
+  {
+    "version": "v5.0.0",
+    "date": "2025-07-01",
+    "changes": [
+      "Added 28 new features",
+      "Wordle daily game",
+      "Quiz with leaderboard",
+      "RPS challenges",
+      "Temp-ban system",
+      "Modlog system",
+      "Slowmode",
+      "Lockwords mute",
+      "Birthday auto-greet",
+      "Profile and rep",
+      "Marry/divorce",
+      "Inventory",
+      "Backup and restore",
+      "ytmp3/ytmp4 via yt-dlp",
+      "AI summarize",
+      "Auto-rules DM",
+      "Auto-kick unverified",
+      "Feedback command",
+      "Menu keyword search"
+    ]
+  },
+  {
+    "version": "v4.0.0",
+    "date": "2024-12-01",
+    "changes": [
+      "185+ commands",
+      "Multi-session support",
+      "Anti-ban protection",
+      "DC/Marvel themes"
+    ]
+  },
+  {
+    "version": "v3.0.0",
+    "date": "2024-06-01",
+    "changes": [
+      "Lockmode",
+      "Antiraid",
+      "Autoreply system",
+      "Top 10 songs"
+    ]
+  },
+  {
+    "version": "v2.0.0",
+    "date": "2024-01-01",
+    "changes": [
+      "TicTacToe",
+      "Hangman",
+      "Trivia",
+      "Poll system"
+    ]
+  },
+  {
+    "version": "v1.0.0",
+    "date": "2023-06-01",
+    "changes": [
+      "Initial release",
+      "Core moderation",
+      "Media downloaders",
+      "Sticker tools"
+    ]
+  }
+]

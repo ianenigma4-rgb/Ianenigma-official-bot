@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const activityPath = path.join(__dirname, '../data/memberActivity.json');
+const activityPath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'memberActivity.json');
 
 function loadActivity() {
     try {

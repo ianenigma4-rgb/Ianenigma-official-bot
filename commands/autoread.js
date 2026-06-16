@@ -8,7 +8,7 @@ const path = require('path');
 const isOwnerOrSudo = require('../lib/isOwner');
 
 // Path to store the configuration
-const configPath = path.join(__dirname, '..', 'data', 'autoread.json');
+const configPath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'autoread.json');
 
 // Initialize configuration file if it doesn't exist
 function initConfig() {

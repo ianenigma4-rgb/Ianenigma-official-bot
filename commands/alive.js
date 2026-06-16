@@ -19,8 +19,18 @@ async function aliveCommand(sock, chatId, message) {
         const uptimeStr = `${h}h ${m}m ${s}s`;
         const ramUsedMB = Math.round(process.memoryUsage().rss / 1024 / 1024);
         const ramTotalMB = Math.round(os.totalmem() / 1024 / 1024);
-        const hour = new Date().getHours();
-        const sleeping = hour >= 1 && hour < 6;
+        let sleeping = false;
+        try {
+            const { getOwnerTime } = require('./lib/locationManager');
+            const timeStr = getOwnerTime();
+            const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+            if (match) {
+                let h = parseInt(match[1]);
+                if (match[3].toUpperCase() === 'PM' && h !== 12) h += 12;
+                if (match[3].toUpperCase() === 'AM' && h === 12) h = 0;
+                sleeping = h >= 1 && h < 6;
+            }
+        } catch { sleeping = new Date().getHours() >= 1 && new Date().getHours() < 6; }
         const ping = Date.now() - start;
         const mode = settings.commandMode || 'public';
 

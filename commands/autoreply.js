@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_PATH = path.join(__dirname, '../data/autoreply.json');
+const DATA_PATH = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'autoreply.json');
 
 function loadData() {
     try {

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const RULES_PATH = path.join(__dirname, '../data/rules.json');
+const RULES_PATH = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'rules.json');
 
 function loadRules() {
     try {

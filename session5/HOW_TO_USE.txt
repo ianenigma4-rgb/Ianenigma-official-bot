@@ -1,0 +1,31 @@
+╔═══════════════════════════════════════════════════════╗
+║           SESSION 5 — IANENIGMA MD BOT                ║
+╠═══════════════════════════════════════════════════════╣
+║  Add this number's details to your .env file like:   ║
+╚═══════════════════════════════════════════════════════╝
+
+SESSION5_ID=ADEVOS-X:~eyJub2lzZUtleSI6eyJwcml2YXRlIjp7...(your full session id)
+SESSION5_OWNER=256XXXXXXXXX
+SESSION5_NAME=IANENIGMA MD BOT 5
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HOW TO GET YOUR SESSION ID:
+  1. Visit your pairing page on the bot panel
+  2. Enter your WhatsApp number (with country code, no +)
+  3. Enter the pairing code that appears on your phone
+     (WhatsApp → Settings → Linked Devices → Link a Device)
+  4. Copy the FULL session ID exactly as given — it looks like:
+     ADEVOS-X:~eyJub2lzZUtleSI6eyJwcml2YXRlIjp7InR5cGUiOiJC...
+  5. Paste the WHOLE thing (including ADEVOS-X:~) into
+     SESSION5_ID= in your .env file
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE:
+  • SESSION5_ID is the ONLY way to connect this session.
+  • Leave SESSION5_ID= empty to skip session 5.
+  • The bot only starts sessions that have a SESSION5_ID set.
+  • If your session expires, generate a new one and replace
+    SESSION5_ID in .env, then restart.
+

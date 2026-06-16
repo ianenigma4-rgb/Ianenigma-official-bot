@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const configPath = path.join(__dirname, '../data/tagmereply.json');
+const configPath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'tagmereply.json');
 
 function loadConfig() {
     try {

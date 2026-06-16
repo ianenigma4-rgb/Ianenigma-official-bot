@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const PREFIX_FILE = path.join(__dirname, '../data/prefix.json');
+const PREFIX_FILE = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'prefix.json');
 
 function getPrefix() {
     try {

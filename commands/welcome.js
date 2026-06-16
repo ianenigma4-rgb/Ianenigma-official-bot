@@ -142,4 +142,9 @@ async function handleGroupUpdate(sock, update) {
     }
 }
 
-module.exports = { welcomeCommand, goodbyeCommand, handleGroupUpdate };
+// handleJoinEvent is the name expected by main.js
+const handleJoinEvent = async (sock, chatId, participants) => {
+    await handleGroupUpdate(sock, { id: chatId, participants, action: 'add' });
+};
+
+module.exports = { welcomeCommand, goodbyeCommand, handleGroupUpdate, handleJoinEvent };

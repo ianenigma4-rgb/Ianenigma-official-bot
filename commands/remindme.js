@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const remindersPath = path.join(__dirname, '../data/reminders.json');
+const remindersPath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'reminders.json');
 
 function loadReminders() {
     try {

@@ -3,7 +3,7 @@ const path = require('path');
 const isOwnerOrSudo = require('../lib/isOwner');
 
 const channelInfo = {};
-const configPath = path.join(__dirname, '../data/autoStatus.json');
+const configPath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'autoStatus.json');
 
 const DEFAULT_CONFIG = {
     enabled: false,

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const AFK_PATH = path.join(__dirname, '../data/afk.json');
+const AFK_PATH = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'afk.json');
 
 function loadAfk() {
     try {

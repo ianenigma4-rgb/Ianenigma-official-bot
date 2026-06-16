@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const isAdmin = require('../lib/isAdmin');
 
-const warningsPath = path.join(__dirname, '../data/warnings.json');
+const warningsPath = path.join(process.env.BOT_DATA_DIR || path.join(__dirname, '../data'), 'warnings.json');
 
 function loadWarnings() {
     try {
