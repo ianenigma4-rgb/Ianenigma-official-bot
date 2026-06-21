@@ -2,9 +2,11 @@ const yts = require('yt-search');
 const axios = require('axios');
 
 const AUDIO_APIS = [
-    (url) => `https://apis-keith.vercel.app/download/dlmp3?url=${url}`,
-    (url) => `https://api.giftedtech.my.id/api/download/ytmp3?apikey=gifted&url=${url}`,
-    (url) => `https://api.dreaded.site/api/ytmp3?url=${url}`,
+    (url) => ({ url: `https://api.giftedtech.my.id/api/download/ytmp3?apikey=gifted&url=${url}`, extract: d => d?.result?.downloadUrl || d?.result?.download || d?.data?.download || d?.download || d?.url }),
+    (url) => ({ url: `https://api.siputzx.my.id/api/d/ytmp3?url=${url}`, extract: d => d?.data?.url || d?.result?.url || d?.url }),
+    (url) => ({ url: `https://api.yupra.my.id/api/downloader/ytmp3?url=${url}`, extract: d => d?.data?.download_url || d?.download_url || d?.url }),
+    (url) => ({ url: `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp3?url=${url}`, extract: d => d?.data?.url || d?.result?.url || d?.url }),
+    (url) => ({ url: `https://api.ryzendesu.vip/api/downloader/ytmp3?url=${url}`, extract: d => d?.data?.url || d?.result || d?.url }),
 ];
 
 async function playCommand(sock, chatId, message) {
@@ -35,23 +37,22 @@ async function playCommand(sock, chatId, message) {
         let audioUrl = null;
         let title = video.title;
 
-        for (const buildUrl of AUDIO_APIS) {
+        for (const buildApi of AUDIO_APIS) {
             try {
-                const res = await axios.get(buildUrl(ytUrl), { timeout: 20000 });
-                const data = res.data;
-                // Handle different API response formats
-                const url = data?.result?.downloadUrl || data?.result?.download || data?.data?.download || data?.download || data?.url;
-                if (url) {
-                    audioUrl = url;
-                    title = data?.result?.title || data?.data?.title || title;
+                const { url: apiUrl, extract } = buildApi(ytUrl);
+                const res = await axios.get(apiUrl, { timeout: 25000 });
+                const extracted = extract(res.data);
+                if (extracted && typeof extracted === 'string' && extracted.startsWith('http')) {
+                    audioUrl = extracted;
+                    title = res.data?.result?.title || res.data?.data?.title || title;
                     break;
                 }
-            } catch { continue; }
+            } catch (_) { continue; }
         }
 
         if (!audioUrl) {
             return sock.sendMessage(chatId, {
-                text: '❌ Download failed. All audio APIs are down. Try again later.'
+                text: '❌ Download failed. All audio APIs are currently unavailable. Try *.song* command instead.'
             }, { quoted: message });
         }
 
