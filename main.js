@@ -156,6 +156,7 @@ const playCommand = require('./commands/play');
 const tiktokCommand = require('./commands/tiktok');
 const songCommand = require('./commands/song');
 const aiCommand = require('./commands/ai');
+const askCommand = require('./commands/ask');
 const urlCommand = require('./commands/url');
 const { handleTranslateCommand } = require('./commands/translate');
 const { autotranslateCommand, handleAutoTranslate } = require('./commands/autotranslate');
@@ -1297,6 +1298,9 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 break;
             case userMessage.startsWith(PREFIX + 'gpt') || userMessage.startsWith(PREFIX + 'gemini'):
                 await aiCommand(sock, chatId, message);
+                break;
+            case userMessage.startsWith(PREFIX + 'ask'):
+                await askCommand(sock, chatId, message);
                 break;
             case userMessage.startsWith(PREFIX + 'translate') || userMessage.startsWith(PREFIX + 'trt'):
                 const commandLength = userMessage.startsWith(PREFIX + 'translate') ? 10 : 4;
