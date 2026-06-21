@@ -194,9 +194,145 @@ npm run start:clean        # cleanup + optimized start
 npm run start:fresh        # reset session + start
 ```
 
-### Deployment
+---
 
-The bot supports deployment on **Replit**, **Render**, and **Termux** (self-hosted on-device). A `Procfile` and `app.json` are included for Heroku-style platforms.
+## ☁️ Deployment
+
+The bot runs on **Render**, **Replit**, **Railway**, and **Termux** (self-hosted on Android). A `Procfile` and `app.json` are included for Heroku-style platforms. Choose the platform that fits your setup below.
+
+---
+
+### 🟢 Render (Recommended — Free Tier Available)
+
+Render keeps your bot online 24/7 with a free web service. The `Procfile` is already included.
+
+1. Go to [render.com](https://render.com) and sign in with GitHub
+2. Click **New → Web Service**
+3. Connect this repo: `ianenigma4-rgb/Ianenigma-official-bot`
+4. Set the following in the Render dashboard:
+
+   | Setting | Value |
+   |---|---|
+   | **Environment** | `Node` |
+   | **Build Command** | `npm install --legacy-peer-deps` |
+   | **Start Command** | `npm start` |
+   | **Plan** | Free (or Starter for always-on) |
+
+5. Under **Environment Variables**, add:
+
+   ```
+   SESSION_ID     = your_session_id_here
+   OWNER_NUMBER   = 256XXXXXXXXX
+   BOT_NAME       = IANENIGMA MD BOT
+   ```
+
+6. Click **Deploy** — Render will build and start the bot automatically
+7. Check the **Logs** tab to confirm the bot connects to WhatsApp
+
+> ⚠️ Free Render services spin down after 15 minutes of inactivity. Use the **Starter plan** ($7/mo) or a keep-alive ping service to stay online 24/7.
+
+---
+
+### 🔵 Replit (Easy Setup, Always-On with Hacker Plan)
+
+1. Go to [replit.com](https://replit.com) and create a new **Node.js** Repl
+2. In the Shell tab, run:
+   ```bash
+   git clone https://github.com/ianenigma4-rgb/Ianenigma-official-bot.git .
+   npm install --legacy-peer-deps
+   ```
+3. Open the **Secrets** tab (🔒 icon) and add:
+   ```
+   SESSION_ID     = your_session_id_here
+   OWNER_NUMBER   = 256XXXXXXXXX
+   BOT_NAME       = IANENIGMA MD BOT
+   ```
+4. In `.replit`, set the run command:
+   ```
+   run = "npm start"
+   ```
+5. Click **Run** — the bot will start and connect to WhatsApp
+6. To keep it online 24/7, enable **Always On** (requires Hacker plan) or use [UptimeRobot](https://uptimerobot.com) to ping the Repl URL every 5 minutes
+
+---
+
+### 🚂 Railway (One-Click Deploy, $5 Free Credits)
+
+1. Go to [railway.app](https://railway.app) and sign in with GitHub
+2. Click **New Project → Deploy from GitHub repo**
+3. Select `ianenigma4-rgb/Ianenigma-official-bot`
+4. Railway auto-detects Node.js and uses the `Procfile` — no extra config needed
+5. Go to **Variables** and add:
+   ```
+   SESSION_ID     = your_session_id_here
+   OWNER_NUMBER   = 256XXXXXXXXX
+   BOT_NAME       = IANENIGMA MD BOT
+   NODE_OPTIONS   = --max-old-space-size=460
+   ```
+6. Click **Deploy** — Railway builds and starts the bot
+7. Check **Logs** to confirm WhatsApp connection
+
+> Railway gives $5 free credits monthly — enough to run the bot ~500 hours/month on the smallest instance.
+
+---
+
+### 📱 Termux (Self-Hosted on Android — No Server Needed)
+
+Run the bot directly on your Android phone — no cloud required.
+
+1. Install **Termux** from [F-Droid](https://f-droid.org/packages/com.termux/) (not Play Store)
+2. Open Termux and run:
+   ```bash
+   pkg update && pkg upgrade -y
+   pkg install nodejs git -y
+   ```
+3. Clone the repo:
+   ```bash
+   git clone https://github.com/ianenigma4-rgb/Ianenigma-official-bot.git
+   cd Ianenigma-official-bot
+   npm install --legacy-peer-deps
+   ```
+4. Create a `.env` file with your credentials:
+   ```bash
+   nano .env
+   ```
+   Add these lines:
+   ```
+   SESSION_ID=your_session_id_here
+   OWNER_NUMBER=256XXXXXXXXX
+   BOT_NAME=IANENIGMA MD BOT
+   ```
+   Save with `Ctrl+X → Y → Enter`
+5. Start the bot:
+   ```bash
+   npm start
+   ```
+6. To keep it running when Termux is in the background, install **Termux:Boot** from F-Droid and add a startup script, or run inside a `screen` session:
+   ```bash
+   pkg install screen -y
+   screen -S ianenigma
+   npm start
+   # Detach with Ctrl+A then D
+   # Re-attach later with: screen -r ianenigma
+   ```
+
+> ⚠️ Keep your phone plugged in and disable battery optimization for Termux to avoid the bot disconnecting.
+
+---
+
+### ⚙️ Environment Variables Reference
+
+These variables are supported across all platforms:
+
+| Variable | Required | Description |
+|---|---|---|
+| `SESSION_ID` | ✅ Yes | Your WhatsApp session ID from the pairing site |
+| `SESSION1_ID` – `SESSION5_ID` | Optional | Additional sessions for multi-bot setups |
+| `OWNER_NUMBER` | ✅ Yes | Your WhatsApp number (no `+`, e.g. `256700000000`) |
+| `BOT_NAME` | Optional | Display name for the bot (default: `IANENIGMA MD BOT`) |
+| `PREFIX` | Optional | Command prefix (default: `.`) — can also be changed live with `.setprefix` |
+| `NODE_OPTIONS` | Optional | Set to `--max-old-space-size=460` on low-memory platforms |
+| `PORT` | Optional | HTTP port for the pairing web UI (default: `3000`) |
 
 ---
 
@@ -238,7 +374,7 @@ The architect behind the entire IANENIGMA MD ecosystem — concept, code, and br
 - 🛡️ Engineered the antiban bio-rotation system (233 rotating quotes)
 - 🌐 Built the auto-translate feature with 3-API fallback chain
 - 📅 Implemented automation systems — daily scheduler, auto-kick, antiraid, antiflood
-- 🔁 Replaced dead/rate-limited third-party APIs (shizoapi, apis-keith, princetechn, Giphy, wolfXapis) with working alternatives
+- 🔁 Replaced dead/rate-limited third-party APIs with working alternatives
 - 🖥️ Built and maintained the Termux self-hosting platform for personal deployment
 - 🧩 Designed the multi-session bot manager (`SESSION1_ID`–`SESSION5_ID`)
 - 📦 Maintains the GitHub repository and ongoing version releases
