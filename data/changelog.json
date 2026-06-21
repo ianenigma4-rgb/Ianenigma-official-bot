@@ -1,5 +1,16 @@
 [
   {
+    "version": "v5.2.0",
+    "date": "2026-06-17",
+    "changes": [
+      "Session ID: added support for 'BlackHat~' and other single-tilde prefix formats",
+      "Session decoding now handles ADEVOS-X:~, ;;;, BlackHat~, and plain base64 — all in one pass",
+      "Fixed: .gpt/.gemini silently broke if the owner changed the prefix with .setprefix (hardcoded '.gpt' string check)",
+      "Added missing .ask command — was documented in the menu but never implemented",
+      "Repository links updated to point to the official repo"
+    ]
+  },
+  {
     "version": "v5.1.1",
     "date": "2026-06-16",
     "changes": [
