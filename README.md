@@ -8,7 +8,7 @@
 
 <br/><br/>
 
-<img src="https://img.shields.io/badge/Version-v5.1.0-FFD700?style=for-the-badge&logo=github&logoColor=black"/>
+<img src="https://img.shields.io/badge/Version-v5.2.0-FFD700?style=for-the-badge&logo=github&logoColor=black"/>
 <img src="https://img.shields.io/badge/Node.js-≥18.0.0-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
 <img src="https://img.shields.io/badge/Baileys-v7.0.0-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
 <img src="https://img.shields.io/badge/Platform-WhatsApp_Multi--Device-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
@@ -152,8 +152,8 @@ Run `.menu search <keyword>` inside the bot to find any command instantly.
 ### Installation
 
 ```bash
-git clone https://github.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-
-cd IANENIGMA-New-bot-on-replit-
+git clone https://github.com/ianenigma4-rgb/Ianenigma-official-bot.git
+cd Ianenigma-official-bot
 npm install
 ```
 
@@ -164,6 +164,19 @@ Get your session ID from the pairing site, then set it as an environment variabl
 ```bash
 SESSION_ID=ADEVOS-X:~your_base64_creds_here
 ```
+
+The bot also accepts session IDs in the `BlackHat~` format and plain base64 — every common format from the major pairing sites decodes automatically, no configuration needed.
+
+**Supported session ID formats:**
+
+| Format | Example |
+|---|---|
+| ADEVOS-X | `ADEVOS-X:~eyJjcmVkcyI6...` |
+| Semicolon-prefixed | `IANENIGMA;;;eyJjcmVkcyI6...` |
+| BlackHat | `BlackHat~6ThJaGa4qfm6eyJjcmVkcyI6...` |
+| Plain base64 | `eyJjcmVkcyI6...` |
+
+Whatever site generated your session ID, paste the whole string as-is into `SESSION_ID` — the bot strips the prefix and decodes the credentials automatically.
 
 For multi-session setups, use `SESSION1_ID` through `SESSION5_ID`.
 
@@ -245,7 +258,7 @@ Built and maintains the session pairing site that powers bot authentication.
 
 ---
 
-> Want to contribute? Open a pull request on the [bot repository](https://github.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-) or reach out via the WhatsApp channel below.
+> Want to contribute? Open a pull request on the [bot repository](https://github.com/ianenigma4-rgb/Ianenigma-official-bot) or reach out via the WhatsApp channel below.
 
 ---
 
@@ -253,13 +266,13 @@ Built and maintains the session pairing site that powers bot authentication.
 
 <div align="center">
 
-[![Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-)
+[![Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ianenigma4-rgb/Ianenigma-official-bot)
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VbCiP1Y1noywqpmoSz2z)
 [![Pairing](https://img.shields.io/badge/Pairing-ADEVOS_X-000000?style=for-the-badge&logo=render&logoColor=white)](https://adevos-x-pair.onrender.com)
 
 </div>
 
-- **Bot Repository:** `https://github.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-`
+- **Bot Repository:** `https://github.com/ianenigma4-rgb/Ianenigma-official-bot`
 - **WhatsApp Channel:** `https://whatsapp.com/channel/0029VbCiP1Y1noywqpmoSz2z`
 - **Pairing Site (by ADEVOS):** `https://adevos-x-pair.onrender.com`
 
