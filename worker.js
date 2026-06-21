@@ -92,6 +92,10 @@ global.phoneNumber  = OWNER
         let raw = SESSION_ID.trim()
         if (raw.includes(';;;')) raw = raw.split(';;;').pop().trim()
         if (raw.includes(':~'))  raw = raw.split(':~').pop().trim()
+        // Generic "PREFIX~base64data" format (e.g. BlackHat~xxxx, ADEVOS-X~xxxx).
+        // Only strip on a single '~' with no colon before it, so this doesn't
+        // collide with the ':~' format already handled above.
+        if (raw.includes('~') && !raw.includes(':~')) raw = raw.split('~').pop().trim()
         raw = raw.replace(/^data:[^;]+;base64,/, '').trim()
 
         let decoded = null
