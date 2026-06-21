@@ -45,27 +45,35 @@ const COMMAND_INDEX = [
     { cmd: '.demote', desc: 'Remove admin from a member' },
     { cmd: '.tagall', desc: 'Tag all group members' },
     { cmd: '.sticker', desc: 'Convert image or video to sticker' },
-    { cmd: '.play', desc: 'Play YouTube audio' },
+    { cmd: '.play', desc: 'Play YouTube audio in chat' },
     { cmd: '.song', desc: 'Download song MP3' },
     { cmd: '.video', desc: 'Download YouTube video' },
     { cmd: '.tiktok', desc: 'Download TikTok video' },
     { cmd: '.instagram', desc: 'Download Instagram photo/video' },
     { cmd: '.weather', desc: 'Live weather for a city' },
     { cmd: '.joke', desc: 'Random joke' },
-    { cmd: '.quote', desc: 'Random quote' },
+    { cmd: '.quote', desc: 'Random motivational quote' },
     { cmd: '.fact', desc: 'Random fact' },
     { cmd: '.8ball', desc: 'Magic 8-ball answers' },
     { cmd: '.trivia', desc: 'Random trivia question' },
     { cmd: '.hangman', desc: 'Hangman word game' },
-    { cmd: '.tictactoe', desc: 'Play Tic-Tac-Toe' },
+    { cmd: '.tictactoe', desc: 'Play Tic-Tac-Toe vs bot' },
     { cmd: '.truth', desc: 'Truth or dare - truth card' },
     { cmd: '.dare', desc: 'Truth or dare - dare card' },
-    { cmd: '.qr', desc: 'Generate a QR code' },
+    { cmd: '.adhdtest', desc: 'Take the 18-question ADHD screening test' },
+    { cmd: '.qr', desc: 'Generate a QR code from text or URL' },
     { cmd: '.calc', desc: 'Calculator' },
     { cmd: '.removebg', desc: 'Remove background from image' },
-    { cmd: '.remini', desc: 'AI enhance image quality' },
-    { cmd: '.ss', desc: 'Screenshot a website' },
+    { cmd: '.remini', desc: 'AI enhance / upscale image quality' },
+    { cmd: '.ss/.ssweb', desc: 'Take a screenshot of any website' },
     { cmd: '.meme', desc: 'Random meme' },
+    { cmd: '.shayari', desc: 'Random Urdu/Hindi shayari poem' },
+    { cmd: '.flirt', desc: 'Random flirt line' },
+    { cmd: '.goodnight', desc: 'Sweet goodnight message' },
+    { cmd: '.roseday', desc: 'Rose Day special message' },
+    { cmd: '.netflix', desc: 'Browse Netflix recommendations' },
+    { cmd: '.top10songs', desc: 'Top 10 songs list (fresh/throwback/mixed)' },
+    { cmd: '.topmembers', desc: 'Top 5 most active group members' },
     { cmd: '.theme', desc: 'Change bot theme (DC/Marvel)' },
     { cmd: '.setprefix', desc: 'Change command prefix' },
     { cmd: '.antiban', desc: 'Bio rotation anti-ban protection' },
@@ -81,24 +89,39 @@ const COMMAND_INDEX = [
     { cmd: '.schedule', desc: 'Schedule a one-shot message' },
     { cmd: '.poll', desc: 'Create a group poll' },
     { cmd: '.stats', desc: 'Command usage statistics' },
-    { cmd: '.ai/.gpt', desc: 'AI Q&A via ChatGPT' },
+    { cmd: '.ai/.gpt', desc: 'AI Q&A via ChatGPT (5-provider fallback)' },
     { cmd: '.gemini', desc: 'AI Q&A via Google Gemini' },
     { cmd: '.settings', desc: 'View all bot settings' },
     { cmd: '.ianenigma', desc: 'About the creator' },
     { cmd: '.owner', desc: 'Contact the owner' },
     { cmd: '.pair', desc: 'Generate a pairing code' },
+    { cmd: '.blur', desc: 'Blur an image' },
+    { cmd: '.simage', desc: 'Convert sticker to image' },
+    { cmd: '.tg', desc: 'Download a Telegram sticker pack as WhatsApp stickers' },
+    { cmd: '.hidetag', desc: 'Tag all non-admins silently' },
+    { cmd: '.tag', desc: 'Tag all group members with a message' },
+    { cmd: '.sudo', desc: 'Manage sudo users (add/remove/list)' },
 ];
 
 async function menusearchCommand(sock, chatId, userMessage, message) {
-    const keyword = userMessage.replace(/^\S+\s*/, '').trim().toLowerCase();
-    if (!keyword) {
-        return sock.sendMessage(chatId, { text: '🔍 *.menu search <keyword>*\nSearch for commands by keyword.\n\nExample: *.menu search ban*', ...channelInfo }, { quoted: message });
+    try {
+        const keyword = userMessage.replace(/^\S+\s*/, '').trim().toLowerCase();
+        if (!keyword) {
+            return sock.sendMessage(chatId, { text: '🔍 *.menu search <keyword>*\nSearch for commands by keyword.\n\nExample: *.menu search ban*', ...channelInfo }, { quoted: message });
+        }
+        const results = COMMAND_INDEX.filter(c => c.cmd.toLowerCase().includes(keyword) || c.desc.toLowerCase().includes(keyword));
+        if (!results.length) {
+            return sock.sendMessage(chatId, { text: `🔍 No commands found for *"${keyword}"*.\n\nTry a different keyword.`, ...channelInfo }, { quoted: message });
+        }
+        const lines = results.slice(0, 15).map(r => `• *${r.cmd}* — ${r.desc}`).join('\n');
+        await sock.sendMessage(chatId, {
+            text: `🔍 *Search: "${keyword}"* (${results.length} found)\n\n${lines}${results.length > 15 ? '\n\n_...and more. Try a narrower keyword._' : ''}`,
+            ...channelInfo
+        }, { quoted: message });
+    } catch (error) {
+        console.error('Error in menusearch command:', error);
+        await sock.sendMessage(chatId, { text: '❌ Search failed. Please try again.' }, { quoted: message });
     }
-    const results = COMMAND_INDEX.filter(c => c.cmd.toLowerCase().includes(keyword) || c.desc.toLowerCase().includes(keyword));
-    if (!results.length) {
-        return sock.sendMessage(chatId, { text: '🔍 No commands found for "*' + keyword + '*".', ...channelInfo }, { quoted: message });
-    }
-    const lines = results.slice(0, 15).map(r => '• *' + r.cmd + '* - ' + r.desc).join('\n');
-    await sock.sendMessage(chatId, { text: '🔍 *Search: "' + keyword + '"* (' + results.length + ' found)\n\n' + lines + (results.length > 15 ? '\n\n...and more' : ''), ...channelInfo }, { quoted: message });
 }
+
 module.exports = menusearchCommand;
