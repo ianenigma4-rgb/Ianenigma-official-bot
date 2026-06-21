@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Syntax check (index.js)
+        run: node --check index.js
+
+      - name: Syntax check (main.js)
+        run: node --check main.js
+
+      - name: Syntax check (worker.js)
+        run: node --check worker.js
+
+      - name: Syntax check (settings.js)
+        run: node --check settings.js
+
+      - name: Syntax check (config.js)
+        run: node --check config.js
+
+      - name: Syntax check all commands
+        run: |
+          for f in commands/*.js; do
+            echo "Checking $f..."
+            node --check "$f"
+          done
+
+      - name: Syntax check all lib files
+        run: |
+          for f in lib/*.js; do
+            echo "Checking $f..."
+            node --check "$f"
+          done
