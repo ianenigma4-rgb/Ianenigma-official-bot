@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { getPrefix } = require('./setprefix');
 
 // ── Pollinations.ai text API — completely free, no key required ──────────────
 // GET https://text.pollinations.ai/{prompt}?model=openai|mistral|...
@@ -35,18 +36,23 @@ async function aiCommand(sock, chatId, message) {
         }
 
         const parts = text.trim().split(' ');
-        const command = parts[0].toLowerCase();
+        const firstWord = parts[0];
         const query = parts.slice(1).join(' ').trim();
 
         if (!query) {
             return sock.sendMessage(chatId, {
-                text: `🤖 Please provide a question after ${command}\n\nExample: ${command} explain black holes`
+                text: `🤖 Please provide a question after ${firstWord}\n\nExample: ${firstWord} explain black holes`
             }, { quoted: message });
         }
 
         await sock.sendMessage(chatId, { react: { text: '🤖', key: message.key } });
 
-        const isGpt = command === '.gpt' || command === 'gpt';
+        // Determine GPT vs Gemini by checking which command word was typed,
+        // independent of whatever the current prefix is (was hardcoded to
+        // '.gpt' before, which silently broke if the owner ran .setprefix).
+        const prefix = getPrefix();
+        const isGpt = firstWord.toLowerCase() === `${prefix}gpt`.toLowerCase() ||
+                      firstWord.toLowerCase() === 'gpt';
         const apis = isGpt ? GPT_APIS : GEMINI_APIS;
         const label = isGpt ? '🤖 *GPT*' : '✨ *GEMINI*';
 
