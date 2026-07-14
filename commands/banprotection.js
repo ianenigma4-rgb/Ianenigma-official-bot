@@ -36,7 +36,7 @@ async function banprotectionCommand(sock, chatId, message) {
     const isSleeping = hour >= 1 && hour < 6;
 
     const text =
-`🛡️ *IANENIGMA MD — BAN PROTECTION STATUS*
+`🛡️ *IAN ENIGMA MD — BAN PROTECTION STATUS*
 ━━━━━━━━━━━━━━━━━━━━━━━
 🇺🇬 Uganda Time: *${ugandaTime}*
 ━━━━━━━━━━━━━━━━━━━━━━━

@@ -15,7 +15,7 @@ const FALLBACK_DARES = [
     "Tell the group your most embarrassing moment in detail.",
     "Do your best dance move and describe it in words.",
     "Share the weirdest thing in your search history right now.",
-    "Send a voice note saying 'I love IANENIGMA MD BOT' in the silliest voice possible.",
+    "Send a voice note saying 'I love IAN ENIGMA MD BOT' in the silliest voice possible.",
     "Set your status to 'I lost a dare' for the next 10 minutes.",
     "Write a dramatic love letter to your phone and read it aloud.",
     "Send the first photo in your camera roll.",

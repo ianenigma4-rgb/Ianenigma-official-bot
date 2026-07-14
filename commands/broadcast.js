@@ -34,7 +34,7 @@ async function broadcastCommand(sock, chatId, message, rawText, senderId, isOwne
     for (const gid of groups) {
         try {
             await sock.sendMessage(gid, {
-                text: `📢 *BROADCAST MESSAGE*\n\n${text}\n\n_— ${global.botname || 'IANENIGMA MD BOT'}_`
+                text: `📢 *BROADCAST MESSAGE*\n\n${text}\n\n_— ${global.botname || 'IAN ENIGMA MD BOT'}_`
             });
             sent++;
         } catch (e) {

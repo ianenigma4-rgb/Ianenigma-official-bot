@@ -12,13 +12,13 @@ global.owner = [
 global.mods  = [];
 global.prems = [];
 
-global.botname    = global.botname    || 'IANENIGMA MD BOT';
+global.botname    = global.botname    || 'IAN ENIGMA MD BOT';
 global.author     = 'v1.0.0';
 global.namebot    = global.botname;
 global.version    = 'v1.0.0';
-global.packname   = 'IANENIGMA';
+global.packname   = 'IAN ENIGMA';
 global.wm         = `© ${global.botname}`;
-global.stickpack  = 'IANENIGMA';
+global.stickpack  = 'IAN ENIGMA';
 global.stickauth  = 'v1.0.0';
 global.wait       = '_Loading..._';
 global.eror       = '_Server Error_';

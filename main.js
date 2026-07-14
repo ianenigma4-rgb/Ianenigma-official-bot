@@ -399,7 +399,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
 
         // Auto-reply to greetings (both private and group)
         if (!message.key.fromMe) {
-            const greetWords = ['hi', 'hello', 'hey', 'hlo', 'hii', 'sup', 'yo', 'howdy', 'hola', 'salut', 'bonjour', 'greetings', 'good morning', 'good afternoon', 'good evening', 'good night', 'gm', 'gn', 'morning', 'evening', 'sawa', 'ola', 'waddup', 'wsp', 'whaddup', 'heya', 'hi there', 'hello there'];
+            const greetWords = ['hi', 'hello', 'hey', 'hlo', 'hii', 'sup', 'yo', 'howdy', 'hola', 'salut', 'bonjour', 'greetings', 'good morning', 'good afternoon', 'good evening', 'good night', 'good day', 'gm', 'gn', 'morning', 'evening', 'sawa', 'ola', 'waddup', 'wsp', 'whaddup', 'heya', 'hi there', 'hello there', 'yo yo', 'wagwan', 'hiya', 'howzit', 'shalom', 'namaste', 'salaam', 'konnichiwa', 'ni hao', 'ciao', 'bonsoir', 'buenas', 'buongiorno', 'good to see you', 'pleasure to meet you', 'salutations', 'how do you do', 'how are you', "how's it going", "what's up", 'wassup', 'ayo', 'oyy', 'oi', 'yow', 'aloha', 'mabuhay', 'jambo', 'habari'];
             const lowerMsg = userMessage.toLowerCase().trim();
             const isGreeting = greetWords.some(g => lowerMsg === g || lowerMsg.startsWith(g + ' ') || lowerMsg.startsWith(g + '!') || lowerMsg.startsWith(g + ',') || lowerMsg.startsWith(g + '?'));
             if (isGreeting) {
@@ -436,24 +436,31 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 // ── OWNER gets special personal treatment ───────────────────
                 const ownerMorning = [
                     `morning 🌅 you're up early`,
-                    `ayy morning IANENIGMA ☀️ slept well?`,
+                    `ayy morning IAN ENIGMA ☀️ slept well?`,
                     `morning!! hope you had a good rest, ready when you are`,
                     `good morning 😊 what's the plan today?`,
                     `hey, morning! running smooth all night 🌅`,
+                    `Good morning. I trust you rested well and are ready to proceed.`,
+                    `Good morning. Standing by and fully operational, awaiting your instructions.`,
+                    `Good morning. I hope you slept soundly. How may I assist you today?`,
                 ];
                 const ownerAfternoon = [
-                    `hey IANENIGMA 👋 hope the day's going alright`,
+                    `hey IAN ENIGMA 👋 hope the day's going alright`,
                     `afternoon! you eaten yet? 🍽️`,
                     `hey hey, afternoon. how's it going so far?`,
                     `sup boss, afternoon check. everything good on your end?`,
                     `afternoon ☀️ still grinding or catching a break?`,
+                    `Good afternoon. I hope your day is progressing well. How may I be of service?`,
+                    `Good afternoon. All systems remain in good order. What do you require?`,
                 ];
                 const ownerEvening = [
                     `evening boss 🌆 long day?`,
                     `hey! how was today?`,
                     `evening 🌇 winding down or still at it?`,
-                    `hey IANENIGMA, evening. you good?`,
+                    `hey IAN ENIGMA, evening. you good?`,
                     `finally evening huh 😄 how'd the day treat you?`,
+                    `Good evening. I hope the day treated you kindly.`,
+                    `Good evening. I remain at your service should you need anything further today.`,
                 ];
                 const ownerNight = [
                     `still up? 🌙 what do you need`,
@@ -461,12 +468,16 @@ async function handleMessages(sock, messageUpdate, printLog) {
                     `night boss 🌙 what's going on?`,
                     `heyyy 🌙 late but I gotchu. what's up?`,
                     `you're still up huh 😄 same tbh. what do you need?`,
+                    `Good evening. It is rather late, but I remain fully attentive.`,
+                    `Still awake, I see. I am at your disposal — how may I help?`,
                 ];
                 const ownerLateNight = [
                     `bro it's ${timeStr} 😭 go sleep, I'll hold it down`,
                     `${timeStr}?? you sure you're okay? 😅`,
                     `ayo it's ${timeStr} and you're still up 👀 respect the dedication lol. what's good?`,
                     `okay so we're doing ${timeStr} hours now 😂 what do you need boss?`,
+                    `It is currently ${timeStr}. I would respectfully suggest rest, though I remain at your service.`,
+                    `Noted: the hour is ${timeStr}. I shall not question it — how may I assist?`,
                 ];
 
                 // ── REGULAR USERS get friendly but not as personal ──────────
@@ -476,6 +487,8 @@ async function handleMessages(sock, messageUpdate, printLog) {
                     `hey! morning 😊 what's up?`,
                     `morning! caught you bright and early. what can I do for you?`,
                     `up before the sun${n ? ` ${n}` : ''}? 🌅 respect. what's good?`,
+                    `Good morning${n ? `, ${n}` : ''}. How may I assist you today?`,
+                    `Good morning${n ? `, ${n}` : ''}. I trust you are well. What can I help you with?`,
                 ];
                 const userMidMorning = [
                     `hey${n ? ` ${n}` : ''}! morning going okay?`,
@@ -483,6 +496,8 @@ async function handleMessages(sock, messageUpdate, printLog) {
                     `heyy good morning 😊 what do you need?`,
                     `${n ? `hey ${n}!` : 'hey!'} morning 👋 what's up?`,
                     `morning! what can I help you with?`,
+                    `Good day${n ? `, ${n}` : ''}. How may I be of service?`,
+                    `Good morning${n ? `, ${n}` : ''}. Please let me know how I can help.`,
                 ];
                 const userAfternoon = [
                     `hey${n ? ` ${n}` : ''}! how's the afternoon going?`,
@@ -490,6 +505,8 @@ async function handleMessages(sock, messageUpdate, printLog) {
                     `hey! 😄 afternoon check — what do you need?`,
                     `${n ? `${n}` : 'hey'}, afternoon! what's up?`,
                     `hey hey 🌤️ what can I help you with?`,
+                    `Good afternoon${n ? `, ${n}` : ''}. How may I assist you?`,
+                    `Good afternoon${n ? `, ${n}` : ''}. I hope your day is going well. What do you require?`,
                 ];
                 const userEvening = [
                     `evening${n ? ` ${n}` : ''}! 🌆 how was your day?`,
@@ -497,6 +514,8 @@ async function handleMessages(sock, messageUpdate, printLog) {
                     `evening${n ? ` ${n}` : ''} 🌇 long day? what do you need?`,
                     `heyyy, good evening 👋 what's going on?`,
                     `hey! what's up this evening?`,
+                    `Good evening${n ? `, ${n}` : ''}. How can I assist you this evening?`,
+                    `Good evening${n ? `, ${n}` : ''}. I hope your day went well. How may I help?`,
                 ];
                 const userNight = [
                     `hey${n ? ` ${n}` : ''} 🌙 night owl? what do you need?`,
@@ -504,12 +523,14 @@ async function handleMessages(sock, messageUpdate, printLog) {
                     `heyy 🌙 what's going on?`,
                     `hey late night energy 😄 what do you need?`,
                     `${n ? `${n}` : 'hey'} 🌙 what's up?`,
+                    `Good evening${n ? `, ${n}` : ''}. I remain available should you require assistance.`,
                 ];
                 const userLateNight = [
                     `hey${n ? ` ${n}` : ''} 😅 it's ${timeStr}, you good? I'm here`,
                     `okay it's ${timeStr} 😂${n ? ` ${n}` : ''} what do you need?`,
                     `${timeStr} and you're saying hi 👀 lol okay, what's up?`,
                     `heyyy 🌙 late night check — I'm around. what do you need?`,
+                    `It is presently ${timeStr}. Nonetheless, I remain at your service — how may I help?`,
                 ];
 
                 // ── THEME personality replies (40% chance) ──────────────────
@@ -642,7 +663,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
                 text: (() => {
                     const _loc = loadLocation();
                     const _t = getLocOwnerTime();
-                    return `🌙 *IANENIGMA MD BOT* is in sleep mode.\n\n${_loc.flag} ${_loc.city}, ${_loc.country} — *${_t}*\n⏰ Sleep hours: *1:00 AM – 6:00 AM (your local time)*\n\nCommands resume at 6:00 AM. Stay safe, Gotham. 🦇`;
+                    return `🌙 *IAN ENIGMA MD BOT* is in sleep mode.\n\n${_loc.flag} ${_loc.city}, ${_loc.country} — *${_t}*\n⏰ Sleep hours: *1:00 AM – 6:00 AM (your local time)*\n\nCommands resume at 6:00 AM. Stay safe, Gotham. 🦇`;
                 })()
             }, { quoted: message });
             return;

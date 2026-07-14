@@ -2,32 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const { loadUserGroupData, saveUserGroupData } = require('../lib/index');
 
-const DEFAULT_WELCOME = `╔═══════════════════╗
-║  🎉 WELCOME  🎉   ║
-╚═══════════════════╝
+const DEFAULT_WELCOME = `🦇 Welcome to the group, {user}! Glad to have you here.`;
 
-👤 *{user}* just joined!
-🏠 Group: *{group}*
-👥 Members: *{count}*
-
-_Welcome to the family!_ 🤝`;
-
-const DEFAULT_GOODBYE = `╔═══════════════════╗
-║  👋 GOODBYE  👋   ║
-╚═══════════════════╝
-
-😢 *{user}* has left.
-🏠 Group: *{group}*
-👥 Members: *{count}*
-
-_We'll miss you!_`;
+const DEFAULT_GOODBYE = `🦇 {user} has left the group. Take care.`;
 
 async function welcomeCommand(sock, chatId, message, rawText, isAdmin) {
     if (!chatId.endsWith('@g.us')) {
         return sock.sendMessage(chatId, { text: '❌ Groups only.' }, { quoted: message });
     }
     if (!isAdmin) {
-        return sock.sendMessage(chatId, { text: '❌ Only admins can use .welcome' }, { quoted: message });
+        return sock.sendMessage(chatId, { text: '🦇 Only admins can use .welcome' }, { quoted: message });
     }
 
     const arg = rawText.replace(/^\.welcome\s*/i, '').trim();
@@ -74,7 +58,7 @@ async function goodbyeCommand(sock, chatId, message, rawText, isAdmin) {
         return sock.sendMessage(chatId, { text: '❌ Groups only.' }, { quoted: message });
     }
     if (!isAdmin) {
-        return sock.sendMessage(chatId, { text: '❌ Only admins can use .goodbye' }, { quoted: message });
+        return sock.sendMessage(chatId, { text: '🦇 Only admins can use .goodbye' }, { quoted: message });
     }
 
     const arg = rawText.replace(/^\.goodbye\s*/i, '').trim();

@@ -1,5 +1,5 @@
 /*
- * IANENIGMA MD BOT — Session Worker
+ * IAN ENIGMA MD BOT — Session Worker
  * Runs ONE WhatsApp session independently.
  * Spawned by index.js for each active session.
  */
@@ -61,7 +61,7 @@ process.env.BOT_DATA_DIR = DATA_DIR
     }
 })()
 const OWNER       = process.env[`SESSION${N}_OWNER`] || process.env.OWNER_NUMBER || '256775063416'
-const BOT_NAME    = process.env[`SESSION${N}_NAME`]  || `IANENIGMA MD BOT ${N}`
+const BOT_NAME    = process.env[`SESSION${N}_NAME`]  || `IAN ENIGMA MD BOT ${N}`
 const SESSION_ID  = process.env[`SESSION${N}_ID`]    || ''
 
 const label = `[Session${N} | ${BOT_NAME}]`
@@ -91,10 +91,9 @@ global.phoneNumber  = OWNER
 
         let raw = SESSION_ID.trim()
         if (raw.includes(';;;')) raw = raw.split(';;;').pop().trim()
+        // Handles: ADEVOS-X:~eyJ... / DAVE-X:~eyJ... / BLACKHAT:~eyJ... etc.
         if (raw.includes(':~'))  raw = raw.split(':~').pop().trim()
-        // Generic "PREFIX~base64data" format (e.g. BlackHat~xxxx, ADEVOS-X~xxxx).
-        // Only strip on a single '~' with no colon before it, so this doesn't
-        // collide with the ':~' format already handled above.
+        // Generic PREFIX~base64 (e.g. ADEVOS-X~eyJ... without colon)
         if (raw.includes('~') && !raw.includes(':~')) raw = raw.split('~').pop().trim()
         raw = raw.replace(/^data:[^;]+;base64,/, '').trim()
 

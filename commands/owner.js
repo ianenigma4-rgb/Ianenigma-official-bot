@@ -7,25 +7,25 @@ async function ownerCommand(sock, chatId, message) {
         const vcard =
             `BEGIN:VCARD\n` +
             `VERSION:3.0\n` +
-            `FN:${settings.botOwner || 'IANENIGMA'}\n` +
+            `FN:${settings.botOwner || 'IAN ENIGMA'}\n` +
             `TEL;waid=${settings.ownerNumber}:${settings.ownerNumber}\n` +
             `END:VCARD`;
 
         await sock.sendMessage(chatId, {
-            contacts: { displayName: settings.botOwner || 'IANENIGMA', contacts: [{ vcard }] }
+            contacts: { displayName: settings.botOwner || 'IAN ENIGMA', contacts: [{ vcard }] }
         });
 
         await sock.sendMessage(chatId, {
             text: `👤 *BOT OWNER*\n` +
                   `━━━━━━━━━━━━━━━━━━━━━━━\n` +
-                  `🧠 *Name:* IANENIGMA\n` +
+                  `🧠 *Name:* IAN ENIGMA\n` +
                   `🌍 *Location:* Uganda 🇺🇬\n` +
                   `🎭 *Title:* The Architect\n` +
                   `━━━━━━━━━━━━━━━━━━━━━━━\n` +
                   `📢 *WhatsApp Channel:*\n` +
                   `${channel}\n` +
                   `━━━━━━━━━━━━━━━━━━━━━━━\n` +
-                  `_Join the channel to stay updated on new features, updates and announcements for IANENIGMA MD BOT._`
+                  `_Join the channel to stay updated on new features, updates and announcements for IAN ENIGMA MD BOT._`
         }, { quoted: message });
     } catch (error) {
         console.error('Error in owner command:', error);

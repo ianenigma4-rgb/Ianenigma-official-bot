@@ -35,7 +35,7 @@ async function convertStickerToImage(sock, quotedMessage, chatId, message) {
         const imageBuffer = await fsPromises.readFile(outputImagePath);
         await sock.sendMessage(chatId, {
             image: imageBuffer,
-            caption: '✅ *Sticker converted to image!*\n\n_Powered by IANENIGMA MD BOT_ 🤖'
+            caption: '✅ *Sticker converted to image!*\n\n_Powered by IAN ENIGMA MD BOT_ 🤖'
         }, { quoted: message });
 
         scheduleFileDeletion(stickerFilePath);

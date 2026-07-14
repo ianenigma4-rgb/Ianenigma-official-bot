@@ -62,7 +62,7 @@ async function handleLeaveEvent(sock, id, participants) {
                     .replace(/{group}/g, groupName);
             } else {
                 // Default message if no custom message is set
-                finalMessage = ` *@${displayName}* we will never miss you! `;
+                finalMessage = `🦇 @${displayName} has left the group. Take care.`;
             }
             
             // Try to send with image first (always try images)
@@ -116,7 +116,7 @@ async function handleLeaveEvent(sock, id, participants) {
                     .replace(/{user}/g, `@${user}`)
                     .replace(/{group}/g, groupName);
             } else {
-                fallbackMessage = `Goodbye @${user}! 👋`;
+                fallbackMessage = `🦇 @${user} has left the group. Take care.`;
             }
             
             await sock.sendMessage(id, {

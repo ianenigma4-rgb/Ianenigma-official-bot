@@ -8,7 +8,7 @@ async function aliveCommand(sock, chatId, message) {
             const { getTheme } = require('./theme');
             theme = getTheme();
         } catch {
-            theme = { name: 'Batman', emoji: '🦇', banner: '🦇 *IANENIGMA MD BOT* 🦇', quote: '"I am vengeance. I am the night."', divider: '━━━━━━━━━━━━━━━━━━━', accent: '🖤' };
+            theme = { name: 'Batman', emoji: '🦇', banner: '🦇 *IAN ENIGMA MD BOT* 🦇', quote: '"I am vengeance. I am the night."', divider: '━━━━━━━━━━━━━━━━━━━', accent: '🖤' };
         }
 
         const start = Date.now();
@@ -89,7 +89,7 @@ ${theme.accent} _Type_ *.menu* _to see all commands._
         await sock.sendMessage(chatId, { text: aliveMsg }, { quoted: message });
     } catch (error) {
         console.error('Error in alive command:', error);
-        await sock.sendMessage(chatId, { text: '🦇 IANENIGMA MD BOT is alive! v3.0.0' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '🦇 IAN ENIGMA MD BOT is alive! v3.0.0' }, { quoted: message });
     }
 }
 

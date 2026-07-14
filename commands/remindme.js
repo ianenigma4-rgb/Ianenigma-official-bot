@@ -43,14 +43,14 @@ function restoreReminders(sock) {
         const remaining = r.fireAt - now;
         if (remaining <= 0) {
             sock.sendMessage(r.chatId, {
-                text: `⏰ *REMINDER* (missed while offline)\n\n📌 ${r.text}\n\n_— IANENIGMA MD BOT_`
+                text: `⏰ *REMINDER* (missed while offline)\n\n📌 ${r.text}\n\n_— IAN ENIGMA MD BOT_`
             }).catch(() => {});
         } else {
             active.push(r);
             setTimeout(async () => {
                 try {
                     await sock.sendMessage(r.chatId, {
-                        text: `⏰ *REMINDER*\n\n📌 ${r.text}\n\n_— IANENIGMA MD BOT_`
+                        text: `⏰ *REMINDER*\n\n📌 ${r.text}\n\n_— IAN ENIGMA MD BOT_`
                     });
                     const current = loadReminders().filter(x => x.id !== r.id);
                     saveReminders(current);
@@ -104,7 +104,7 @@ async function remindmeCommand(sock, chatId, message, rawText, senderId) {
     setTimeout(async () => {
         try {
             await sock.sendMessage(chatId, {
-                text: `⏰ *REMINDER*\n\n📌 ${reminderText}\n\n_— IANENIGMA MD BOT_`
+                text: `⏰ *REMINDER*\n\n📌 ${reminderText}\n\n_— IAN ENIGMA MD BOT_`
             });
             const current = loadReminders().filter(x => x.id !== reminder.id);
             saveReminders(current);

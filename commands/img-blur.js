@@ -37,7 +37,7 @@ async function blurCommand(sock, chatId, message, quotedMessage) {
 
         await sock.sendMessage(chatId, {
             image: blurredImage,
-            caption: '✅ *Image blurred successfully!*\n\n_Powered by IANENIGMA MD BOT_ 🤖'
+            caption: '✅ *Image blurred successfully!*\n\n_Powered by IAN ENIGMA MD BOT_ 🤖'
         }, { quoted: message });
 
     } catch (error) {

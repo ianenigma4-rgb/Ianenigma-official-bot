@@ -1,7 +1,7 @@
 {
-  "name": "IANENIGMA MD BOT",
-  "description": "IANENIGMA MD — DC Universe themed WhatsApp Multi-Device Bot v4.0.0",
-  "logo": "https://raw.githubusercontent.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-/main/assets/bot_image.jpg",
+  "name": "IAN ENIGMA MD BOT",
+  "description": "IAN ENIGMA MD — DC Universe themed WhatsApp Multi-Device Bot v4.0.0",
+  "logo": "https://raw.githubusercontent.com/ianenigma4-rgb/IAN ENIGMA-New-bot-on-replit-/main/assets/bot_image.jpg",
   "keywords": ["whatsapp", "bot", "ianenigma", "dc-themes", "baileys"],
   "repository": "https://github.com/ianenigma4-rgb/IANENIGMA-New-bot-on-replit-",
   "buildpacks": [

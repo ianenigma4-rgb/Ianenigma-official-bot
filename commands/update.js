@@ -45,7 +45,7 @@ function downloadFile(url, dest, visited = new Set()) {
             if (visited.has(url) || visited.size > 5) return reject(new Error('Too many redirects'));
             visited.add(url);
             const client = url.startsWith('https://') ? require('https') : require('http');
-            const req = client.get(url, { headers: { 'User-Agent': 'IANENIGMA-MD-Updater/1.0', Accept: '*/*' } }, res => {
+            const req = client.get(url, { headers: { 'User-Agent': 'IAN ENIGMA-MD-Updater/1.0', Accept: '*/*' } }, res => {
                 if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
                     const location = res.headers.location;
                     if (!location) return reject(new Error(`HTTP ${res.statusCode} without Location`));
@@ -220,7 +220,7 @@ async function updateCommand(sock, chatId, message, zipOverride) {
                 : '';
 
             updateMsg =
-                `✅ *IANENIGMA MD BOT Updated!*\n` +
+                `✅ *IAN ENIGMA MD BOT Updated!*\n` +
                 `━━━━━━━━━━━━━━━━━━━━━━━\n` +
                 `📌 *${oldRev}* → *${newRev}*\n` +
                 `📁 *Files changed:* ${fileCount}\n` +
@@ -240,7 +240,7 @@ async function updateCommand(sock, chatId, message, zipOverride) {
                 : newVersion ? `📌 *Version:* ${newVersion}\n` : '';
 
             updateMsg =
-                `✅ *IANENIGMA MD BOT Updated!*\n` +
+                `✅ *IAN ENIGMA MD BOT Updated!*\n` +
                 `━━━━━━━━━━━━━━━━━━━━━━━\n` +
                 `${versionLine}` +
                 `📁 *Files updated:* ${fileCount}\n` +

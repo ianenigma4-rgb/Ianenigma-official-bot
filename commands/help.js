@@ -9,7 +9,7 @@ async function helpCommand(sock, chatId, message) {
         const { getTheme } = require('./theme');
         theme = getTheme();
     } catch {
-        theme = { name: 'Batman', emoji: '🦇', banner: '🦇 *IANENIGMA MD BOT* 🦇', quote: '"I am vengeance. I am the night."', border: '▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓', divider: '━━━━━━━━━━━━━━━━━━━━━━━━━', bullet: '▸', accent: '🖤' };
+        theme = { name: 'Batman', emoji: '🦇', banner: '🦇 *IAN ENIGMA MD BOT* 🦇', quote: '"I am vengeance. I am the night."', border: '▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓', divider: '━━━━━━━━━━━━━━━━━━━━━━━━━', bullet: '▸', accent: '🖤' };
     }
     let mode = 'Public';
     try {
@@ -302,7 +302,7 @@ async function helpCommand(sock, chatId, message) {
         '',
 
         D,
-        theme.emoji + ' *IANENIGMA MD ' + version + ' — 190+ Commands*',
+        theme.emoji + ' *IAN ENIGMA MD ' + version + ' — 190+ Commands*',
         '',
         '📢 *Channel:* https://whatsapp.com/channel/0029VbCiP1Y1noywqpmoSz2z',
         D,

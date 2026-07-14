@@ -1,5 +1,5 @@
 /**
- * IANENIGMA MD BOT
+ * IAN ENIGMA MD BOT
  * Auto-Translate Feature — Detects any non-English message and
  * replies with the English translation automatically.
  * Uses a 3-API fallback chain (no API key needed).

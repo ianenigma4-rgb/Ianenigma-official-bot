@@ -13,7 +13,7 @@ _"In the shadows of code, a legend was built."_
 👤 *ABOUT THE CREATOR*
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🧠 *Name:* IANENIGMA
+🧠 *Name:* IAN ENIGMA
 🎭 *Title:* The Architect
 💻 *Role:* Bot Developer & Designer
 🌍 *Location:* Uganda 🇺🇬
@@ -23,7 +23,7 @@ _"In the shadows of code, a legend was built."_
 🤖 *ABOUT THE BOT*
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📦 *Name:* IANENIGMA MD BOT
+📦 *Name:* IAN ENIGMA MD BOT
 🔖 *Version:* ${version}
 🧩 *Commands:* 180+
 🎨 *Themes:* 24 Universe themes (12 DC + 12 Marvel)
@@ -73,7 +73,7 @@ _Stay updated on new features, updates & announcements_
 📜 *CREDITS*
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🦇 *Designed & Built by:* IANENIGMA
+🦇 *Designed & Built by:* IAN ENIGMA
 🤝 *Powered by:* Baileys + Node.js ecosystem
 💡 *Inspired by:* The DC Universe
 

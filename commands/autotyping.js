@@ -1,5 +1,5 @@
 /**
- * IANENIGMA MD BOT
+ * IAN ENIGMA MD BOT
  * Autotyping Command - Shows fake typing status
  */
 

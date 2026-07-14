@@ -100,7 +100,7 @@ async function reminiCommand(sock, chatId, message, args) {
 
         await sock.sendMessage(chatId, {
             image: Buffer.from(imgRes.data),
-            caption: '✨ *Image enhanced successfully!*\n\n_Enhanced by IANENIGMA MD BOT_ 🤖'
+            caption: '✨ *Image enhanced successfully!*\n\n_Enhanced by IAN ENIGMA MD BOT_ 🤖'
         }, { quoted: message });
 
         await sock.sendMessage(chatId, { react: { text: '✅', key: message.key } });

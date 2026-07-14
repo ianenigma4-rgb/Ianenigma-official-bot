@@ -1,5 +1,5 @@
 /*
- * IANENIGMA MD BOT — Master Process
+ * IAN ENIGMA MD BOT — Master Process
  * Scans session1…session5, forks one worker per active session.
  * Each worker is fully independent — one crash never affects others.
  */
@@ -45,7 +45,7 @@ app.get('/api/session', (req, res) => {
 app.get('/', (req, res) => {
     const paired = checkSession()
     res.send(
-        '🦇 IANENIGMA MD BOT is running!<br><br>' +
+        '🦇 IAN ENIGMA MD BOT is running!<br><br>' +
         (paired
             ? '✅ Bot is paired and running.'
             : '📱 <a href="/pair" style="color:#6c63ff">Click here to pair your WhatsApp number</a>')
@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 app.get('/download', (req, res) => {
     const { execSync } = require('child_process')
     const os   = require('os')
-    const tmpZip = path.join(os.tmpdir(), 'IANENIGMA-MD-BOT.zip')
+    const tmpZip = path.join(os.tmpdir(), 'IAN ENIGMA-MD-BOT.zip')
     try {
         execSync(
             `python3 -c "
@@ -75,7 +75,7 @@ with zipfile.ZipFile('${tmpZip}', 'w', zipfile.ZIP_DEFLATED) as zf:
             { timeout: 30000 }
         )
         res.setHeader('Content-Type', 'application/zip')
-        res.setHeader('Content-Disposition', 'attachment; filename="IANENIGMA-MD-BOT.zip"')
+        res.setHeader('Content-Disposition', 'attachment; filename="IAN ENIGMA-MD-BOT.zip"')
         fs.createReadStream(tmpZip).pipe(res)
     } catch (e) {
         console.error('Zip error:', e.message)

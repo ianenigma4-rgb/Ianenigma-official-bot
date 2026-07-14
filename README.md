@@ -1,9 +1,9 @@
 <div align="center">
 
-<img src="./assets/bot_image.jpg" alt="IANENIGMA Empire" width="500"/>
+<img src="./assets/bot_image.jpg" alt="IAN ENIGMA Empire" width="500"/>
 
 <a href="#">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=40&pause=1000&color=FFD700&center=true&vCenter=true&width=900&height=80&lines=🦇+IANENIGMA+MD+BOT;DC+%26+Marvel+Themed+WhatsApp+Bot;315%2B+Commands+%7C+24+Hero+Themes;Built+in+Uganda+🇺🇬" alt="IANENIGMA MD BOT"/>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=40&pause=1000&color=FFD700&center=true&vCenter=true&width=900&height=80&lines=🦇+IAN ENIGMA+MD+BOT;DC+%26+Marvel+Themed+WhatsApp+Bot;315%2B+Commands+%7C+24+Hero+Themes;Built+in+Uganda+🇺🇬" alt="IAN ENIGMA MD BOT"/>
 </a>
 
 <br/><br/>
@@ -26,15 +26,15 @@
 
 > **"One Command. Endless Power."**
 >
-> 🦇 Designed & Built by **IANENIGMA** — Uganda 🇺🇬
+> 🦇 Designed & Built by **IAN ENIGMA** — Uganda 🇺🇬
 
 </div>
 
 ---
 
-## 🦇 What is IANENIGMA MD?
+## 🦇 What is IAN ENIGMA MD?
 
-**IANENIGMA MD** is a feature-rich WhatsApp Multi-Device bot built on the Baileys v7 library, blending **DC and Marvel character theming** with serious functionality: **315+ commands**, **24 switchable superhero themes**, a **bio-rotation anti-ban system**, built-in **AI tools**, **auto-translate**, and full group moderation — all wrapped in a personality that never feels robotic.
+**IAN ENIGMA MD** is a feature-rich WhatsApp Multi-Device bot built on the Baileys v7 library, blending **DC and Marvel character theming** with serious functionality: **315+ commands**, **24 switchable superhero themes**, a **bio-rotation anti-ban system**, built-in **AI tools**, **auto-translate**, and full group moderation — all wrapped in a personality that never feels robotic.
 
 Built from the ground up for performance, personality, and protection.
 
@@ -172,7 +172,7 @@ The bot also accepts session IDs in the `BlackHat~` format and plain base64 — 
 | Format | Example |
 |---|---|
 | ADEVOS-X | `ADEVOS-X:~eyJjcmVkcyI6...` |
-| Semicolon-prefixed | `IANENIGMA;;;eyJjcmVkcyI6...` |
+| Semicolon-prefixed | `IAN ENIGMA;;;eyJjcmVkcyI6...` |
 | BlackHat | `BlackHat~6ThJaGa4qfm6eyJjcmVkcyI6...` |
 | Plain base64 | `eyJjcmVkcyI6...` |
 
@@ -182,7 +182,7 @@ For multi-session setups, use `SESSION1_ID` through `SESSION5_ID`.
 
 | Tool | URL |
 |---|---|
-| Pairing / Session ID generator | `https://adevos-x-pair.onrender.com` |
+| Pairing / Session ID generator | `https://davex254-sessions.onrender.com/pair` |
 | Alternate pairing site | `ianenigma-pair.onrender.com` |
 
 ### Running
@@ -223,7 +223,7 @@ Render keeps your bot online 24/7 with a free web service. The `Procfile` is alr
    ```
    SESSION_ID     = your_session_id_here
    OWNER_NUMBER   = 256XXXXXXXXX
-   BOT_NAME       = IANENIGMA MD BOT
+   BOT_NAME       = IAN ENIGMA MD BOT
    ```
 
 6. Click **Deploy** — Render will build and start the bot automatically
@@ -245,7 +245,7 @@ Render keeps your bot online 24/7 with a free web service. The `Procfile` is alr
    ```
    SESSION_ID     = your_session_id_here
    OWNER_NUMBER   = 256XXXXXXXXX
-   BOT_NAME       = IANENIGMA MD BOT
+   BOT_NAME       = IAN ENIGMA MD BOT
    ```
 4. In `.replit`, set the run command:
    ```
@@ -266,7 +266,7 @@ Render keeps your bot online 24/7 with a free web service. The `Procfile` is alr
    ```
    SESSION_ID     = your_session_id_here
    OWNER_NUMBER   = 256XXXXXXXXX
-   BOT_NAME       = IANENIGMA MD BOT
+   BOT_NAME       = IAN ENIGMA MD BOT
    NODE_OPTIONS   = --max-old-space-size=460
    ```
 6. Click **Deploy** — Railway builds and starts the bot
@@ -300,7 +300,7 @@ Run the bot directly on your Android phone — no cloud required.
    ```
    SESSION_ID=your_session_id_here
    OWNER_NUMBER=256XXXXXXXXX
-   BOT_NAME=IANENIGMA MD BOT
+   BOT_NAME=IAN ENIGMA MD BOT
    ```
    Save with `Ctrl+X → Y → Enter`
 5. Start the bot:
@@ -329,7 +329,7 @@ These variables are supported across all platforms:
 | `SESSION_ID` | ✅ Yes | Your WhatsApp session ID from the pairing site |
 | `SESSION1_ID` – `SESSION5_ID` | Optional | Additional sessions for multi-bot setups |
 | `OWNER_NUMBER` | ✅ Yes | Your WhatsApp number (no `+`, e.g. `256700000000`) |
-| `BOT_NAME` | Optional | Display name for the bot (default: `IANENIGMA MD BOT`) |
+| `BOT_NAME` | Optional | Display name for the bot (default: `IAN ENIGMA MD BOT`) |
 | `PREFIX` | Optional | Command prefix (default: `.`) — can also be changed live with `.setprefix` |
 | `NODE_OPTIONS` | Optional | Set to `--max-old-space-size=460` on low-memory platforms |
 | `PORT` | Optional | HTTP port for the pairing web UI (default: `3000`) |
@@ -341,8 +341,8 @@ These variables are supported across all platforms:
 Edit `settings.js` to set your bot identity:
 
 ```js
-botName: "IANENIGMA MD BOT",
-botOwner: "IANENIGMA",
+botName: "IAN ENIGMA MD BOT",
+botOwner: "IAN ENIGMA",
 ownerNumber: "256XXXXXXXXX",   // your number, no + symbol
 commandMode: "public",          // or "private"
 ```
@@ -355,13 +355,13 @@ Most other settings (prefix, theme, antiban interval, auto-translate scope) can 
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/Lead_Developer-IANENIGMA-FFD700?style=for-the-badge&logo=github&logoColor=black"/>
-<img src="https://img.shields.io/badge/Pairing_Site-ADEVOS-25D366?style=for-the-badge&logo=render&logoColor=white"/>
+<img src="https://img.shields.io/badge/Lead_Developer-IAN ENIGMA-FFD700?style=for-the-badge&logo=github&logoColor=black"/>
+<img src="https://img.shields.io/badge/Pairing_Site-davex254--sessions-25D366?style=for-the-badge&logo=render&logoColor=white"/>
 
 </div>
 
-### 🦇 IANENIGMA — Creator & Lead Developer
-The architect behind the entire IANENIGMA MD ecosystem — concept, code, and brand.
+### 🦇 IAN ENIGMA — Creator & Lead Developer
+The architect behind the entire IAN ENIGMA MD ecosystem — concept, code, and brand.
 
 <img src="https://img.shields.io/badge/Role-Creator_%26_Lead_Dev-FFD700?style=flat-square&logo=github&logoColor=black"/>
 <img src="https://img.shields.io/badge/Location-Uganda_🇺🇬-000000?style=flat-square"/>
@@ -381,15 +381,14 @@ The architect behind the entire IANENIGMA MD ecosystem — concept, code, and br
 
 ---
 
-### 🔗 ADEVOS — Pairing Infrastructure
-Built and maintains the session pairing site that powers bot authentication.
+### 🔗 Session Pairing Infrastructure
+Powers the session pairing site used for bot authentication.
 
-<img src="https://img.shields.io/badge/Role-Pairing_Site_Developer-25D366?style=flat-square&logo=render&logoColor=white"/>
+<img src="https://img.shields.io/badge/Role-Pairing_Site-25D366?style=flat-square&logo=render&logoColor=white"/>
 <img src="https://img.shields.io/badge/Project-Session_ID_Generator-000000?style=flat-square"/>
 
-**Contributions:**
-- 🔑 Built `adevos-x-pair.onrender.com` — the session ID generator/pairing site used to link WhatsApp accounts to the bot
-- 📡 Designed the `ADEVOS-X:~` session ID format (base64-encoded Baileys credentials)
+**Details:**
+- 🔑 Pairing site: `davex254-sessions.onrender.com/pair` — the session ID generator used to link WhatsApp accounts to the bot
 - ⚙️ Provides the pairing backend that powers `SESSION_ID` and multi-session generation
 
 ---
@@ -404,19 +403,19 @@ Built and maintains the session pairing site that powers bot authentication.
 
 [![Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ianenigma4-rgb/Ianenigma-official-bot)
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VbCiP1Y1noywqpmoSz2z)
-[![Pairing](https://img.shields.io/badge/Pairing-ADEVOS_X-000000?style=for-the-badge&logo=render&logoColor=white)](https://adevos-x-pair.onrender.com)
+[![Pairing](https://img.shields.io/badge/Pairing-davex254--sessions-000000?style=for-the-badge&logo=render&logoColor=white)](https://davex254-sessions.onrender.com/pair)
 
 </div>
 
 - **Bot Repository:** `https://github.com/ianenigma4-rgb/Ianenigma-official-bot`
 - **WhatsApp Channel:** `https://whatsapp.com/channel/0029VbCiP1Y1noywqpmoSz2z`
-- **Pairing Site (by ADEVOS):** `https://adevos-x-pair.onrender.com`
+- **Pairing Site:** `https://davex254-sessions.onrender.com/pair`
 
 ---
 
 <div align="center">
 
-🦇 **IANENIGMA EMPIRE** 🦇
+🦇 **IAN ENIGMA EMPIRE** 🦇
 
 _"In the shadows of code, a legend was built."_
 

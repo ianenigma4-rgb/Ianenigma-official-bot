@@ -60,7 +60,7 @@ async function netflixCommand(sock, chatId, message, rawText) {
                   `• .netflix movies — films only\n` +
                   `• .netflix series — shows only\n` +
                   `• .netflix top — highest rated\n\n` +
-                  `_Powered by IANENIGMA MD BOT_ 🤖`
+                  `_Powered by IAN ENIGMA MD BOT_ 🤖`
         }, { quoted: message });
     } catch (error) {
         console.error('Error in netflix command:', error);

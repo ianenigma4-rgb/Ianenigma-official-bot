@@ -12,8 +12,8 @@ async function stealStickerCommand(sock, chatId, message, rawText) {
         }
 
         const parts = rawText.replace(/^\.(steal|stealsticker)\s*/i, '').split('|');
-        const packName = (parts[0] || 'IANENIGMA').trim();
-        const author = (parts[1] || 'IANENIGMA MD').trim();
+        const packName = (parts[0] || 'IAN ENIGMA').trim();
+        const author = (parts[1] || 'IAN ENIGMA MD').trim();
 
         await sock.sendMessage(chatId, { text: '🎭 Stealing sticker...' }, { quoted: message });
 

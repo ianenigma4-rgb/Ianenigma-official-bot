@@ -20,7 +20,7 @@ async function shayariCommand(sock, chatId, message) {
         const shayari = SHAYARI_LIST[Math.floor(Math.random() * SHAYARI_LIST.length)];
 
         await sock.sendMessage(chatId, {
-            text: shayari + '\n\n_— IANENIGMA MD BOT_ 🤖'
+            text: shayari + '\n\n_— IAN ENIGMA MD BOT_ 🤖'
         }, { quoted: message });
 
     } catch (error) {

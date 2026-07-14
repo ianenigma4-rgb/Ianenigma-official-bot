@@ -1,7 +1,7 @@
 {
   "name": "ianenigma-md-bot",
   "version": "4.0.0",
-  "description": "IANENIGMA MD \u2014 Feature-rich DC Universe themed WhatsApp Multi-Device Bot with 180+ commands, 12 DC themes, and 10-layer anti-ban protection. Built in Uganda \ud83c\uddfa\ud83c\uddec",
+  "description": "IAN ENIGMA MD \u2014 Feature-rich DC Universe themed WhatsApp Multi-Device Bot with 180+ commands, 12 DC themes, and 10-layer anti-ban protection. Built in Uganda \ud83c\uddfa\ud83c\uddec",
   "main": "index.js",
   "scripts": {
     "start": "node --max-old-space-size=460 index.js",
@@ -25,7 +25,7 @@
     "uganda",
     "antiban"
   ],
-  "author": "IANENIGMA",
+  "author": "IAN ENIGMA",
   "license": "ISC",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",

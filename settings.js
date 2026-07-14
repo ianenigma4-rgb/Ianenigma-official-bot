@@ -1,8 +1,8 @@
 const settings = {
-  packname: 'IANENIGMA MD BOT',
-  author: 'IANENIGMA',
-  botName: "IANENIGMA MD BOT",
-  botOwner: 'IANENIGMA', // Your name
+  packname: 'IAN ENIGMA MD BOT',
+  author: 'IAN ENIGMA',
+  botName: "IAN ENIGMA MD BOT",
+  botOwner: 'IAN ENIGMA', // Your name
   ownerNumber: process.env.OWNER_NUMBER || '256775063416', //Set your number here without + symbol
   giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
   commandMode: "public",

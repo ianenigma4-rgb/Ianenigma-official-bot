@@ -100,9 +100,9 @@ async function repoCommand(sock, chatId, message) {
     await sock.sendMessage(chatId, {
         text: `📦 *BOT REPOSITORY*\n` +
               `━━━━━━━━━━━━━━━━━━━━━━━\n` +
-              `📌 *Name:* ${data.name || 'IANENIGMA MD BOT'}\n` +
+              `📌 *Name:* ${data.name || 'IAN ENIGMA MD BOT'}\n` +
               `🔗 *URL:* ${data.url}\n` +
-              `📝 *About:* ${data.description || 'IANENIGMA MD — Feature-rich WhatsApp bot'}` +
+              `📝 *About:* ${data.description || 'IAN ENIGMA MD — Feature-rich WhatsApp bot'}` +
               ghText + `\n` +
               `━━━━━━━━━━━━━━━━━━━━━━━\n` +
               `_⭐ Star the repo if you love this bot!_`

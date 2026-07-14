@@ -27,7 +27,7 @@ async function botinfoCommand(sock, chatId, message) {
     let version = 'v5.0.0';
     try { version = require('../settings').version || 'v5.0.0'; } catch {}
     await sock.sendMessage(chatId, {
-        text: '🦇 *IANENIGMA MD BOT - Info*\n\n📌 Version: *' + version + '*\n⏱️ Uptime: *' + h + 'h ' + m + 'm ' + s + 's*\n💾 RAM: *' + ramMB + 'MB*\n⚙️ Commands: *' + cmdsCount + '+*\n👥 Groups served: *' + groupsCount + '*\n👤 Users seen: *' + usersCount + '*\n🟢 Node.js: *' + process.version + '*\n🖥️ Platform: *' + process.platform + '*',
+        text: '🦇 *IAN ENIGMA MD BOT - Info*\n\n📌 Version: *' + version + '*\n⏱️ Uptime: *' + h + 'h ' + m + 'm ' + s + 's*\n💾 RAM: *' + ramMB + 'MB*\n⚙️ Commands: *' + cmdsCount + '+*\n👥 Groups served: *' + groupsCount + '*\n👤 Users seen: *' + usersCount + '*\n🟢 Node.js: *' + process.version + '*\n🖥️ Platform: *' + process.platform + '*',
         ...channelInfo
     }, { quoted: message });
 }

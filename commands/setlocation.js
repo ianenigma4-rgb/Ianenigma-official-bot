@@ -1,5 +1,5 @@
 /**
- * IANENIGMA MD — .setlocation command
+ * IAN ENIGMA MD — .setlocation command
  * Owner sets their city → drives timezone, sleep, greetings, news, facts
  */
 

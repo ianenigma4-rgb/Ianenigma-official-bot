@@ -16,7 +16,7 @@ async function playCommand(sock, chatId, message) {
 
         if (!searchQuery) {
             return sock.sendMessage(chatId, {
-                text: '🎵 Send a song name!\n\nExample: *.play Blinding Lights*'
+                text: '🦇 Send a song name!\n\nExample: *.play Blinding Lights*'
             }, { quoted: message });
         }
 
@@ -24,7 +24,7 @@ async function playCommand(sock, chatId, message) {
 
         const { videos } = await yts(searchQuery);
         if (!videos || videos.length === 0) {
-            return sock.sendMessage(chatId, { text: '❌ No songs found for that search.' }, { quoted: message });
+            return sock.sendMessage(chatId, { text: '🦇 No songs found for that search.' }, { quoted: message });
         }
 
         const video = videos[0];
@@ -52,7 +52,7 @@ async function playCommand(sock, chatId, message) {
 
         if (!audioUrl) {
             return sock.sendMessage(chatId, {
-                text: '❌ Download failed. All audio APIs are currently unavailable. Try *.song* command instead.'
+                text: '🦇 Download failed. All audio APIs are currently unavailable. Try *.song* command instead.'
             }, { quoted: message });
         }
 
@@ -65,7 +65,7 @@ async function playCommand(sock, chatId, message) {
     } catch (error) {
         console.error('play command error:', error.message);
         await sock.sendMessage(chatId, {
-            text: '❌ Download failed. Please try again later.'
+            text: '🦇 Download failed. Please try again later.'
         }, { quoted: message });
     }
 }

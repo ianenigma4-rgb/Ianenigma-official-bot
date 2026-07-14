@@ -8,7 +8,7 @@ async function fetchMeme(attempt = 0) {
     try {
         const res = await axios.get(`https://www.reddit.com/r/${sub}/random.json?limit=1`, {
             timeout: 10000,
-            headers: { 'User-Agent': 'IANENIGMA-MD-BOT/4.5' }
+            headers: { 'User-Agent': 'IAN ENIGMA-MD-BOT/4.5' }
         });
         const post = res.data?.[0]?.data?.children?.[0]?.data;
         if (!post || !post.url) return fetchMeme(attempt + 1);

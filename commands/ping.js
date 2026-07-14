@@ -38,7 +38,7 @@ async function pingCommand(sock, chatId, message) {
         const version = settings.version || 'v3.0.0';
 
         const text =
-            `🦇 *IANENIGMA MD BOT — PING*\n` +
+            `🦇 *IAN ENIGMA MD BOT — PING*\n` +
             `━━━━━━━━━━━━━━━━━━━━━━━\n` +
             `⚡ *Ping:*    ${latency} ms\n` +
             `⏱️ *Uptime:*  ${uptime}\n` +

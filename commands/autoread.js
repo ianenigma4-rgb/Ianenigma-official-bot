@@ -1,5 +1,5 @@
 /**
- * IANENIGMA MD BOT
+ * IAN ENIGMA MD BOT
  * Autoread Command - Automatically read all messages
  */
 
