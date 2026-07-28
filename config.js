@@ -5,8 +5,8 @@
 // Must stay CommonJS (require/module.exports) — NOT ES module import/export.
 
 global.owner = [
-    ['254700000000', 'Owner', true], // your number here
-    ['']
+    ['254700000000', 'Owner', true], // replace with your actual number (no + sign)
+    // Add more owners here as: ['number', 'name', true]
 ];
 
 global.mods  = [];
