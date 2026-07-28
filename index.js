@@ -53,9 +53,15 @@ app.get('/', (req, res) => {
 })
 
 app.get('/download', (req, res) => {
+    // Security: require DOWNLOAD_TOKEN to prevent unauthenticated source downloads
+    const reqToken = (req.query.token || '').trim()
+    const envToken = (process.env.DOWNLOAD_TOKEN || '').trim()
+    if (!envToken || reqToken !== envToken) {
+        return res.status(403).json({ error: 'Forbidden. Configure DOWNLOAD_TOKEN in your env and pass ?token=<value>.' })
+    }
     const { execSync } = require('child_process')
     const os   = require('os')
-    const tmpZip = path.join(os.tmpdir(), 'IAN ENIGMA-MD-BOT.zip')
+    const tmpZip = path.join(os.tmpdir(), 'IAN-ENIGMA-MD-BOT.zip')
     try {
         execSync(
             `python3 -c "
@@ -75,7 +81,7 @@ with zipfile.ZipFile('${tmpZip}', 'w', zipfile.ZIP_DEFLATED) as zf:
             { timeout: 30000 }
         )
         res.setHeader('Content-Type', 'application/zip')
-        res.setHeader('Content-Disposition', 'attachment; filename="IAN ENIGMA-MD-BOT.zip"')
+        res.setHeader('Content-Disposition', 'attachment; filename="IAN-ENIGMA-MD-BOT.zip"')
         fs.createReadStream(tmpZip).pipe(res)
     } catch (e) {
         console.error('Zip error:', e.message)
